@@ -2,28 +2,29 @@ Command line:
    SOPC_Core_tb_isim_beh.exe
      -simmode  gui
      -simrunnum  0
-     -socket  50560
+     -socket  51483
 
-Mon Apr 16 12:26:30 2018
+Mon Apr 16 15:16:00 2018
 
 
- Elaboration Time: 0.109375 sec
+ Elaboration Time: 0.046875 sec
 
- Current Memory Usage: 1042.78 Meg
+ Current Memory Usage: 1042.76 Meg
 
- Total Signals          : 635
- Total Nets             : 1902
- Total Signal Drivers   : 252
- Total Blocks           : 72
- Total Primitive Blocks : 55
- Total Processes        : 331
- Total Traceable Variables  : 1178
- Total Scalar Nets and Variables : 149661
-Total Line Count : 1995
+ Total Signals          : 490
+ Total Nets             : 1375
+ Total Signal Drivers   : 195
+ Total Blocks           : 55
+ Total Primitive Blocks : 41
+ Total Processes        : 265
+ Total Traceable Variables  : 862
+ Total Scalar Nets and Variables : 115573
+Total Line Count : 1597
+Total Line Count : 1597
 
- Total Simulation Time: 2.51563 sec
+ Total Simulation Time: 18.5781 sec
 
- Current Memory Usage: 1042.78 Meg
+ Current Memory Usage: 1042.76 Meg
 
-Mon Apr 16 12:26:51 2018
+Mon Apr 16 15:28:15 2018
 

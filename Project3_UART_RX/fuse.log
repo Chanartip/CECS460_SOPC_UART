@@ -1,4 +1,4 @@
-Running: fuse.exe -relaunch -intstyle "ise" -incremental -lib "unisims_ver" -lib "unimacro_ver" -lib "xilinxcorelib_ver" -lib "secureip" -o "C:/Users/Chana/Desktop/CECS460/Project3_UART_RX/SOPC_Core_tb_isim_beh.exe" -prj "C:/Users/Chana/Desktop/CECS460/Project3_UART_RX/SOPC_Core_tb_beh.prj" "work.SOPC_Core_tb" "work.glbl" 
+Running: C:\Xilinx\14.7\ISE_DS\ISE\bin\nt64\unwrapped\fuse.exe -intstyle ise -incremental -lib unisims_ver -lib unimacro_ver -lib xilinxcorelib_ver -lib secureip -o C:/Users/Chana/Desktop/CECS460/Project3_UART_RX/SOPC_Core_tb_isim_beh.exe -prj C:/Users/Chana/Desktop/CECS460/Project3_UART_RX/SOPC_Core_tb_beh.prj work.SOPC_Core_tb work.glbl 
 ISim P.20131013 (signature 0x7708f090)
 Number of CPUs detected in this system: 8
 Turning on mult-threading, number of parallel sub-compilation jobs: 16 
@@ -16,10 +16,9 @@ Analyzing Verilog file "C:/Users/Chana/Desktop/CECS460/Project3_UART_RX/UART_TX.
 Analyzing Verilog file "C:/Users/Chana/Desktop/CECS460/Project3_UART_RX/UART_RX.v" into library work
 Analyzing Verilog file "C:/Users/Chana/Desktop/CECS460/Project3_UART_RX/tramelblaze.v" into library work
 Analyzing Verilog file "C:/Users/Chana/Desktop/CECS460/Project3_UART_RX/PED.v" into library work
-Analyzing Verilog file "C:/Users/Chana/Desktop/CECS460/Project3_UART_RX/ipcore_dir/tb_rom.v" into library work
 Analyzing Verilog file "C:/Users/Chana/Desktop/CECS460/Project3_UART_RX/BAUD_DEC.v" into library work
 Analyzing Verilog file "C:/Users/Chana/Desktop/CECS460/Project3_UART_RX/UART_TOP.v" into library work
-Analyzing Verilog file "C:/Users/Chana/Desktop/CECS460/Project3_UART_RX/tramelblaze_top.v" into library work
+Analyzing Verilog file "C:/Users/Chana/Desktop/CECS460/Project3_UART_RX/tramelblaze_top_sim.v" into library work
 Analyzing Verilog file "C:/Users/Chana/Desktop/CECS460/Project3_UART_RX/AISO_RST.v" into library work
 Analyzing Verilog file "C:/Users/Chana/Desktop/CECS460/Project3_UART_RX/ADDR_DECODER.v" into library work
 Analyzing Verilog file "C:/Users/Chana/Desktop/CECS460/Project3_UART_RX/SOPC_Core.v" into library work
@@ -50,11 +49,6 @@ Compiling module BLK_MEM_GEN_V7_3_mem_module(C_CO...
 Compiling module BLK_MEM_GEN_V7_3(C_FAMILY="spart...
 Compiling module scratch_ram
 Compiling module tramelblaze
-Compiling module BLK_MEM_GEN_V7_3_output_stage(C_...
-Compiling module BLK_MEM_GEN_V7_3_softecc_output_...
-Compiling module BLK_MEM_GEN_V7_3_mem_module(C_CO...
-Compiling module BLK_MEM_GEN_V7_3(C_FAMILY="spart...
-Compiling module tb_rom
 Compiling module tramelblaze_top
 Compiling module ADDR_DECODER
 Compiling module AISO_RST
@@ -63,7 +57,7 @@ Compiling module SOPC_Core_tb
 Compiling module glbl
 Time Resolution for simulation is 1ps.
 Waiting for 1 sub-compilation(s) to finish...
-Compiled 34 Verilog Units
+Compiled 29 Verilog Units
 Built simulation executable C:/Users/Chana/Desktop/CECS460/Project3_UART_RX/SOPC_Core_tb_isim_beh.exe
-Fuse Memory Usage: 34620 KB
-Fuse CPU Usage: 1265 ms
+Fuse Memory Usage: 33752 KB
+Fuse CPU Usage: 827 ms
