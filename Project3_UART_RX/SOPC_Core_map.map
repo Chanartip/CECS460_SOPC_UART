@@ -10,7 +10,7 @@ Target Device  : xc6slx16
 Target Package : csg324
 Target Speed   : -3
 Mapper Version : spartan6 -- $Revision: 1.55 $
-Mapped Date    : Mon Apr 16 13:05:43 2018
+Mapped Date    : Tue Apr 17 01:54:50 2018
 
 Mapping design into LUTs...
 Running directed packing...
@@ -20,7 +20,7 @@ INFO:Map:215 - The Interim Design Summary has been generated in the MAP Report
    (.mrp).
 Running timing-driven placement...
 Total REAL time at the beginning of Placer: 4 secs 
-Total CPU  time at the beginning of Placer: 3 secs 
+Total CPU  time at the beginning of Placer: 4 secs 
 
 Phase 1.1  Initial Placement Analysis
 Phase 1.1  Initial Placement Analysis (Checksum:c4100a20) REAL time: 4 secs 
@@ -53,22 +53,22 @@ Phase 9.8  Global Placement
 ....................................................................................................................................
 ............................................................................................................................................................................................
 ..................................
-Phase 9.8  Global Placement (Checksum:13ced669) REAL time: 10 secs 
+Phase 9.8  Global Placement (Checksum:13ced669) REAL time: 11 secs 
 
 Phase 10.5  Local Placement Optimization
-Phase 10.5  Local Placement Optimization (Checksum:13ced669) REAL time: 10 secs 
+Phase 10.5  Local Placement Optimization (Checksum:13ced669) REAL time: 11 secs 
 
 Phase 11.18  Placement Optimization
-Phase 11.18  Placement Optimization (Checksum:abf7b489) REAL time: 15 secs 
+Phase 11.18  Placement Optimization (Checksum:abf7b489) REAL time: 16 secs 
 
 Phase 12.5  Local Placement Optimization
-Phase 12.5  Local Placement Optimization (Checksum:abf7b489) REAL time: 15 secs 
+Phase 12.5  Local Placement Optimization (Checksum:abf7b489) REAL time: 16 secs 
 
 Phase 13.34  Placement Validation
-Phase 13.34  Placement Validation (Checksum:8a03c573) REAL time: 15 secs 
+Phase 13.34  Placement Validation (Checksum:8a03c573) REAL time: 16 secs 
 
-Total REAL time to Placer completion: 16 secs 
-Total CPU  time to Placer completion: 16 secs 
+Total REAL time to Placer completion: 17 secs 
+Total CPU  time to Placer completion: 17 secs 
 Running post-placement packing...
 Writing output files...
 WARNING:PhysDesignRules:2410 - This design is using one or more 9K Block RAMs
@@ -148,9 +148,9 @@ Specific Feature Utilization:
 
 Average Fanout of Non-Clock Nets:                5.20
 
-Peak Memory Usage:  470 MB
-Total REAL time to MAP completion:  17 secs 
-Total CPU time to MAP completion:   16 secs 
+Peak Memory Usage:  469 MB
+Total REAL time to MAP completion:  18 secs 
+Total CPU time to MAP completion:   17 secs 
 
 Mapping completed.
 See MAP report file "SOPC_Core_map.mrp" for details.

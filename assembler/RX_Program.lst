@@ -7,7 +7,7 @@
                ;    Assignment: Project Three Receive Engine               ;
                ;                                                           ;
                ;    Current Version: 1.0                                   ;
-               ;    Date      : March 30, 2018                             ;
+               ;    Date      : April 16, 2018                             ;
                ;                                                           ;
                ;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^;
                
@@ -24,8 +24,14 @@
                ;=============================================================
                ; ScratchPad alias
                ;=============================================================
-               
-               
+               BANNER_BEGIN	EQU		0000
+               BANNER_END		EQU		0097
+               PROMPT_BEGIN    EQU	    0097
+               PROMPT_END      EQU		00B3
+               HOMETOWN_BEGIN  EQU		00B3
+               HOMETOWN_END	EQU		00C9
+               ECHO_BEGIN		EQU		00C9
+               ECHO_END		EQU		00F2
                ;=============================================================
                ; Register alias
                ;=============================================================
@@ -36,12 +42,9 @@
                DELAY           EQU     R5
                DELAY2          EQU     R6
                PRINT_FLAG      EQU     R7
-               PROMPT_BEGIN    EQU     R8
-               HOMETOWN_BEGIN  EQU     R9
-               HOMETOWN_END    EQU     RA
-               ECHO_END        EQU     RB
-               UART_STATUS     EQU     RC
-               CHAR_COUNT      EQU     RD
+               ECHO_END        EQU     R8
+               UART_STATUS     EQU     R9
+               CHAR_COUNT      EQU     RA
                
                ;=============================================================
                ; Port alias
@@ -120,30 +123,25 @@
 0006 AE04 0000
                            LOAD    PRINT_FLAG, FOUR
 0008 AE07 0004
-                           LOAD    PROMPT_BEGIN, ZEROS
-000A AE08 0000
-                           LOAD    HOMETOWN_BEGIN, ZEROS
-000C AE09 0000
                            LOAD    UART_STATUS, ZEROS
-000E AE0C 0000
+000A AE09 0000
                            LOAD    CHAR_COUNT, ZEROS
-0010 AE0D 0000
+000C AE0A 0000
                
                            CALL    BANNER_INIT
-0012 8E00 0030
+000E 8E00 0030
                            CALL    PROMPT_INIT
-0014 8E00 0160
+0010 8E00 0160
                            CALL    HOMETOWN_INIT
-0016 8E00 01f4
+0012 8E00 01f4
                			
                START       ENINT
-0018 1E00               
+0014 1E00               
                ; Main Loop
                MAIN
-                           CALL    BLINK_LED
-0019 8E00 0280
+               ;            CALL    BLINK_LED
                            JUMP    MAIN
-001B A400 0019
+0015 A400 0015
                
                ;=============================================================
                ; Subroutine: BANNER_INIT
@@ -510,13 +508,12 @@
                            ADD     INDEX, ONE          ; should be index for PROMPT BEGIN
 014C 8203 0001
                
-                           STORE   PROMPT_BEGIN, INDEX
-7638
+               ;            STORE   PROMPT_BEGIN, INDEX
                            LOAD    COUNT, ZEROS
-014F AE02 0000
+014E AE02 0000
                
                            RETURN
-0151 3A00               
+0150 3A00               
                ;=============================================================
                ; Subroutine:   PROMPT_INIT
                ;   Store a Prompt into the ScratchPad Memory
@@ -703,11 +700,10 @@
                            ADD     INDEX, ONE          ; This INDEX should be HOMETOWN_BEGIN
 01EA 8203 0001
                
-                           STORE   HOMETOWN_BEGIN, INDEX
-7639
+               ;            STORE   HOMETOWN_BEGIN, INDEX
                
                            RETURN
-01ED 3A00               
+01EC 3A00               
                ;=============================================================
                ; Sub Routine: HOMETOWN_INIT
                ;       Store "MY HOMETOWN IS BANGKOK"
@@ -849,13 +845,12 @@
                            ADD     INDEX, ONE
 0260 8203 0001
                
-                           STORE   HOMETOWN_END, INDEX
-763A
+               ;           STORE   HOMETOWN_END, INDEX
                            AND     INDEX, ZEROS ; Reset to ZEROS to be ready to display
-0263 8A03 0000
+0262 8A03 0000
                
                            RETURN
-0265 3A00               
+0264 3A00               
                ;=============================================================
                ; Subroutine: BLINK_LED
                ;       Blinking LEDs while idling the main loop
@@ -873,8 +868,8 @@
                BLINK_LED
                            LOAD    DELAY, FFFF
 0280 AE05 FFFF
-                           LOAD    DELAY2, 0025
-0282 AE06 0025
+                           LOAD    DELAY2, 0019
+0282 AE06 0019
                TAG
                            SUB     DELAY, ONE
 0284 DC05 0001
@@ -906,67 +901,96 @@
                ;=============================================================
                            ADDRESS 02A0
                TX_FUNC
-                           COMP    PRINT_FLAG, ZEROS
-02A0 9807 0000
-                           RETURNZ
-02A2 4000               
+                           COMP    PRINT_FLAG, FOUR
+02A0 9807 0004
+                           JUMPZ   DISPLAY_BANNER
+02A2 AA00 02b9
+                           COMP    PRINT_FLAG, THREE
+02A4 9807 0003
+                           JUMPZ   DISPLAY_PROMPT
+02A6 AA00 02c4
+                           COMP    PRINT_FLAG, TWO
+02A8 9807 0002
+                           JUMPZ   DISPLAY_HOMETOWN
+02AA AA00 02cf
+                           COMP    PRINT_FLAG, ONE
+02AC 9807 0001
+                           JUMPZ   DISPLAY_ECHO
+02AE AA00 02da
+               
+                           AND     PRINT_FLAG, ZEROS
+02B0 8A07 0000
+               			; maybe get input char here
+               			INPUT	TEMP_REG, DATA_PORT
+02B2 A201 0000
+               			COMP	TEMP_REG, ASC_STAR
+02B4 9801 002A
+               			JUMPZ	SET_HOMETOWN
+02B6 AA00 0301
+               			
+               			
+                           RETURN
+02B8 3A00               
+               DISPLAY_BANNER
                            FETCH   TEMP_REG, INDEX
 7231
                            OUTPUT  TEMP_REG, DATA_PORT
-02A4 B801 0000
+02BA B801 0000
                            ADD     INDEX, ONE
-02A6 8203 0001
+02BC 8203 0001
                
-                           COMP    PRINT_FLAG, FOUR
-02A8 9807 0004
-                           JUMPZ   DISPLAY_BANNER
-02AA AA00 02bb
-                           COMP    PRINT_FLAG, THREE
-02AC 9807 0003
-                           JUMPZ   DISPLAY_PROMPT
-02AE AA00 02c0
-                           COMP    PRINT_FLAG, TWO
-02B0 9807 0002
-                           JUMPZ   DISPLAY_HOMETOWN
-02B2 AA00 02c5
-                           COMP    PRINT_FLAG, ONE
-02B4 9807 0001
-                           JUMPZ   DISPLAY_ECHO
-02B6 AA00 02ca
+                           COMP    INDEX, BANNER_END
+02BE 9803 0097
+                           RETURNC
+02C0 3C00                           LOAD    PRINT_FLAG, THREE
+02C1 AE07 0003
+                           RETURN
+02C3 3A00               			
+               DISPLAY_PROMPT
+                           FETCH   TEMP_REG, INDEX
+7231
+                           OUTPUT  TEMP_REG, DATA_PORT
+02C5 B801 0000
+                           ADD     INDEX, ONE
+02C7 8203 0001
                
-                           AND     PRINT_FLAG, ZEROS
-02B8 8A07 0000
-                           RETURN
-02BA 3A00               
-               DISPLAY_BANNER
-                           COMP    INDEX, PROMPT_BEGIN
-1A83
-                           RETURNC
-02BC 3C00                           LOAD    PRINT_FLAG, THREE
-02BD AE07 0003
-                           RETURN
-02BF 3A00               DISPLAY_PROMPT
-                           COMP    INDEX, HOMETOWN_BEGIN
-1A93
-                           RETURNC
-02C1 3C00                           LOAD    PRINT_FLAG, ZEROS
-02C2 AE07 0000
-                           RETURN
-02C4 3A00               DISPLAY_HOMETOWN
-                           COMP    INDEX, HOMETOWN_END
-1AA3
-                           RETURNC
-02C6 3C00                           LOAD    PRINT_FLAG, ZEROS
-02C7 AE07 0000
-                           RETURN
-02C9 3A00               DISPLAY_ECHO
-                           COMP    INDEX, ECHO_END
-1AB3
+                           COMP    INDEX, PROMPT_END
+02C9 9803 00B3
                            RETURNC
 02CB 3C00                           LOAD    PRINT_FLAG, ZEROS
 02CC AE07 0000
                            RETURN
-02CE 3A00               
+02CE 3A00               			
+               DISPLAY_HOMETOWN
+                           FETCH   TEMP_REG, INDEX
+7231
+                           OUTPUT  TEMP_REG, DATA_PORT
+02D0 B801 0000
+                           ADD     INDEX, ONE
+02D2 8203 0001
+               
+                           COMP    INDEX, HOMETOWN_END
+02D4 9803 00C9
+                           RETURNC
+02D6 3C00                           LOAD    PRINT_FLAG, ZEROS
+02D7 AE07 0000
+                           RETURN
+02D9 3A00               			
+               DISPLAY_ECHO
+                           FETCH   TEMP_REG, INDEX
+7231
+                           OUTPUT  TEMP_REG, DATA_PORT
+02DB B801 0000
+                           ADD     INDEX, ONE
+02DD 8203 0001
+               
+                           COMP    INDEX, ECHO_END
+1A83
+                           RETURNC
+02E0 3C00                           LOAD    PRINT_FLAG, ZEROS
+02E1 AE07 0000
+                           RETURN
+02E3 3A00               
                ;=============================================================
                ;   Subroutine: RX_FUNC
                ;
@@ -974,28 +998,25 @@
                ;
                ;=============================================================
                            ADDRESS 0300
-               RX_FUNC
-                           COMP    PRINT_FLAG, ZEROS
-0300 9807 0000
-                           RETURNNZ
-0302 4200               
-                           INPUT   TEMP_REG, DATA_PORT
-0303 A201 0000
-                           COMP    TEMP_REG, ASC_STAR
-0305 9801 002A
-                           JUMPZ   SET_HOMETOWN
-0307 AA00 030a
+               RX_FUNC		
+               			RETEN
+0300 4600                           ; COMP    PRINT_FLAG, ZEROS
+                           ; RETURNNZ
                
-                           RETURN
-0309 3A00               
+                           ; INPUT   TEMP_REG, DATA_PORT
+                           ; COMP    TEMP_REG, ASC_STAR
+                           ; JUMPZ   SET_HOMETOWN
+               
+                           ; RETURN
+               
                
                SET_HOMETOWN
                            LOAD    PRINT_FLAG, TWO
-030A AE07 0002
+0301 AE07 0002
                            LOAD    INDEX, HOMETOWN_BEGIN
-3093
+0303 AE03 00B3
                            RETURN
-030D 3A00               
+0305 3A00               
                
                
                ;=============================================================
@@ -1035,31 +1056,35 @@
                            ADDRESS 0E00
                ISR
                            INPUT   UART_STATUS, STATUS_PORT
-0E00 A20C 0001
+0E00 A209 0001
                            AND     UART_STATUS, THREE          ; check TX_rdy & RX_rdy
-0E02 8A0C 0003
-               
-                           COMP    UART_STATUS, TWO
-0E04 980C 0002
-                           CALLZ   TX_FUNC                     ; TX is ready
-0E06 9400 02a0
-               
-               ;            COMP    UART_STATUS, ONE
-               ;            CALLZ   RX_FUNC                     ; RX is ready
+0E02 8A09 0003
                
                            COMP    UART_STATUS, THREE
-0E08 980C 0003
+0E04 9809 0003
                            JUMPZ   CALL_BOTH
-0E0A AA00 0e0d
+0E06 AA00 0e11
+               			
+                           COMP    UART_STATUS, TWO
+0E08 9809 0002
+                           CALLZ   TX_FUNC                     ; TX is ready
+0E0A 9400 02a0
+               
+                           COMP    UART_STATUS, ONE
+0E0C 9809 0001
+                           CALLZ   RX_FUNC                     ; RX is ready
+0E0E 9400 0300
+               
                
                            RETEN
-0E0C 4600               
+0E10 4600               
                CALL_BOTH
                            CALL    TX_FUNC                     ; prioritize to TX
-0E0D 8E00 02a0
-               ;            CALL    RX_FUNC
+0E11 8E00 02a0
+                           CALL    RX_FUNC
+0E13 8E00 0300
                            RETEN
-0E0F 4600               
+0E15 4600               
                ;=============================================================
                ;   ISR vectored through 0FFE
                ;   Jump to ISR routine

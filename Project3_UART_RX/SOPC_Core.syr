@@ -4,13 +4,13 @@ Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.09 secs
+Total CPU time to Xst completion: 0.08 secs
  
 --> Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.10 secs
+Total CPU time to Xst completion: 0.09 secs
  
 --> Reading design: SOPC_Core.prj
 
@@ -108,45 +108,45 @@ Cores Search Directories           : {"ipcore_dir"  }
 =========================================================================
 *                          HDL Parsing                                  *
 =========================================================================
-Analyzing Verilog file "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\RX_SHIFT_REG.v" into library work
+Analyzing Verilog file "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\RX_SHIFT_REG.v" into library work
 Parsing module <RX_SHIFT_REG>.
-Analyzing Verilog file "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\RX_REMAP.v" into library work
+Analyzing Verilog file "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\RX_REMAP.v" into library work
 Parsing module <RX_REMAP>.
-Analyzing Verilog file "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\SHIFT_R_FUNC.v" into library work
+Analyzing Verilog file "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\SHIFT_R_FUNC.v" into library work
 Parsing module <SHIFT_R_FUNC>.
-Analyzing Verilog file "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\SHIFT_R.v" into library work
+Analyzing Verilog file "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\SHIFT_R.v" into library work
 Parsing module <SHIFT_R>.
-Analyzing Verilog file "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\RX_DATAPATH.v" into library work
+Analyzing Verilog file "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\RX_DATAPATH.v" into library work
 Parsing module <RX_DATAPATH>.
-Analyzing Verilog file "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\RX_Control.v" into library work
+Analyzing Verilog file "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\RX_Control.v" into library work
 Parsing module <RX_CONTROL>.
-Analyzing Verilog file "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\RS_FLOP.v" into library work
+Analyzing Verilog file "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\RS_FLOP.v" into library work
 Parsing module <RS_FLOP>.
-Analyzing Verilog file "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\ipcore_dir\stack_ram.v" into library work
+Analyzing Verilog file "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\ipcore_dir\stack_ram.v" into library work
 Parsing module <stack_ram>.
-Analyzing Verilog file "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\ipcore_dir\scratch_ram.v" into library work
+Analyzing Verilog file "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\ipcore_dir\scratch_ram.v" into library work
 Parsing module <scratch_ram>.
-Analyzing Verilog file "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\UART_TX.v" into library work
+Analyzing Verilog file "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\UART_TX.v" into library work
 Parsing module <UART_TX>.
-Analyzing Verilog file "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\UART_RX.v" into library work
+Analyzing Verilog file "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\UART_RX.v" into library work
 Parsing module <UART_RX>.
-Analyzing Verilog file "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\tramelblaze.v" into library work
+Analyzing Verilog file "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\tramelblaze.v" into library work
 Parsing module <tramelblaze>.
-Analyzing Verilog file "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\PED.v" into library work
+Analyzing Verilog file "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\PED.v" into library work
 Parsing module <PED>.
-Analyzing Verilog file "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\ipcore_dir\tb_rom.v" into library work
+Analyzing Verilog file "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\ipcore_dir\tb_rom.v" into library work
 Parsing module <tb_rom>.
-Analyzing Verilog file "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\BAUD_DEC.v" into library work
+Analyzing Verilog file "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\BAUD_DEC.v" into library work
 Parsing module <BAUD_DEC>.
-Analyzing Verilog file "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\UART_TOP.v" into library work
+Analyzing Verilog file "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\UART_TOP.v" into library work
 Parsing module <UART_TOP>.
-Analyzing Verilog file "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\tramelblaze_top.v" into library work
+Analyzing Verilog file "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\tramelblaze_top.v" into library work
 Parsing module <tramelblaze_top>.
-Analyzing Verilog file "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\AISO_RST.v" into library work
+Analyzing Verilog file "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\AISO_RST.v" into library work
 Parsing module <AISO_RST>.
-Analyzing Verilog file "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\ADDR_DECODER.v" into library work
+Analyzing Verilog file "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\ADDR_DECODER.v" into library work
 Parsing module <ADDR_DECODER>.
-Analyzing Verilog file "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\SOPC_Core.v" into library work
+Analyzing Verilog file "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\SOPC_Core.v" into library work
 Parsing module <SOPC_Core>.
 
 =========================================================================
@@ -166,7 +166,7 @@ Elaborating module <RX_DATAPATH>.
 Elaborating module <RX_SHIFT_REG>.
 
 Elaborating module <RX_REMAP>.
-WARNING:HDLCompiler:413 - "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\RX_DATAPATH.v" Line 92: Result of 7-bit expression is truncated to fit in 1-bit target.
+WARNING:HDLCompiler:413 - "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\RX_DATAPATH.v" Line 92: Result of 7-bit expression is truncated to fit in 1-bit target.
 
 Elaborating module <UART_TX>.
 
@@ -185,13 +185,13 @@ Elaborating module <tramelblaze_top>.
 Elaborating module <tramelblaze>.
 
 Elaborating module <stack_ram>.
-WARNING:HDLCompiler:1499 - "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\ipcore_dir\stack_ram.v" Line 39: Empty module <stack_ram> remains a black box.
+WARNING:HDLCompiler:1499 - "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\ipcore_dir\stack_ram.v" Line 39: Empty module <stack_ram> remains a black box.
 
 Elaborating module <scratch_ram>.
-WARNING:HDLCompiler:1499 - "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\ipcore_dir\scratch_ram.v" Line 39: Empty module <scratch_ram> remains a black box.
+WARNING:HDLCompiler:1499 - "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\ipcore_dir\scratch_ram.v" Line 39: Empty module <scratch_ram> remains a black box.
 
 Elaborating module <tb_rom>.
-WARNING:HDLCompiler:1499 - "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\ipcore_dir\tb_rom.v" Line 39: Empty module <tb_rom> remains a black box.
+WARNING:HDLCompiler:1499 - "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\ipcore_dir\tb_rom.v" Line 39: Empty module <tb_rom> remains a black box.
 
 Elaborating module <ADDR_DECODER>.
 
@@ -202,26 +202,26 @@ Elaborating module <AISO_RST>.
 =========================================================================
 
 Synthesizing Unit <SOPC_Core>.
-    Related source file is "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\SOPC_Core.v".
+    Related source file is "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\SOPC_Core.v".
     Found 8-bit register for signal <o_LED>.
     Summary:
 	inferred   8 D-type flip-flop(s).
 Unit <SOPC_Core> synthesized.
 
 Synthesizing Unit <UART_TOP>.
-    Related source file is "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\UART_TOP.v".
+    Related source file is "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\UART_TOP.v".
     Summary:
 	inferred   2 Multiplexer(s).
 Unit <UART_TOP> synthesized.
 
 Synthesizing Unit <UART_RX>.
-    Related source file is "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\UART_RX.v".
+    Related source file is "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\UART_RX.v".
     Summary:
 	no macro.
 Unit <UART_RX> synthesized.
 
 Synthesizing Unit <RX_CONTROL>.
-    Related source file is "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\RX_Control.v".
+    Related source file is "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\RX_Control.v".
         IDLE = 2'b00
         START = 2'b01
         DOIT = 2'b10
@@ -245,7 +245,7 @@ Synthesizing Unit <RX_CONTROL>.
 Unit <RX_CONTROL> synthesized.
 
 Synthesizing Unit <RX_DATAPATH>.
-    Related source file is "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\RX_DATAPATH.v".
+    Related source file is "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\RX_DATAPATH.v".
     Found 1-bit register for signal <o_perr>.
     Found 1-bit register for signal <o_ferr>.
     Found 1-bit register for signal <o_ovf>.
@@ -257,21 +257,21 @@ Synthesizing Unit <RX_DATAPATH>.
 Unit <RX_DATAPATH> synthesized.
 
 Synthesizing Unit <RX_SHIFT_REG>.
-    Related source file is "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\RX_SHIFT_REG.v".
+    Related source file is "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\RX_SHIFT_REG.v".
     Found 10-bit register for signal <SH_DATA>.
     Summary:
 	inferred  10 D-type flip-flop(s).
 Unit <RX_SHIFT_REG> synthesized.
 
 Synthesizing Unit <RX_REMAP>.
-    Related source file is "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\RX_REMAP.v".
+    Related source file is "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\RX_REMAP.v".
     Found 10-bit 4-to-1 multiplexer for signal <o_data> created at line 52.
     Summary:
 	inferred   1 Multiplexer(s).
 Unit <RX_REMAP> synthesized.
 
 Synthesizing Unit <UART_TX>.
-    Related source file is "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\UART_TX.v".
+    Related source file is "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\UART_TX.v".
     Found 1-bit register for signal <o_txrdy>.
     Found 1-bit register for signal <r_ld_d1>.
     Found 4-bit register for signal <bit_count>.
@@ -288,20 +288,20 @@ Synthesizing Unit <UART_TX>.
 Unit <UART_TX> synthesized.
 
 Synthesizing Unit <RS_FLOP>.
-    Related source file is "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\RS_FLOP.v".
+    Related source file is "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\RS_FLOP.v".
     Found 1-bit register for signal <Q>.
     Summary:
 	inferred   1 D-type flip-flop(s).
 Unit <RS_FLOP> synthesized.
 
 Synthesizing Unit <SHIFT_R_FUNC>.
-    Related source file is "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\SHIFT_R_FUNC.v".
+    Related source file is "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\SHIFT_R_FUNC.v".
     Summary:
 	inferred   6 Multiplexer(s).
 Unit <SHIFT_R_FUNC> synthesized.
 
 Synthesizing Unit <SHIFT_R>.
-    Related source file is "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\SHIFT_R.v".
+    Related source file is "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\SHIFT_R.v".
         ONES = 11'b11111111111
     Found 11-bit register for signal <SR>.
     Summary:
@@ -310,7 +310,7 @@ Synthesizing Unit <SHIFT_R>.
 Unit <SHIFT_R> synthesized.
 
 Synthesizing Unit <PED>.
-    Related source file is "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\PED.v".
+    Related source file is "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\PED.v".
     Found 1-bit register for signal <q1>.
     Found 1-bit register for signal <q2>.
     Summary:
@@ -318,20 +318,20 @@ Synthesizing Unit <PED>.
 Unit <PED> synthesized.
 
 Synthesizing Unit <BAUD_DEC>.
-    Related source file is "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\BAUD_DEC.v".
+    Related source file is "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\BAUD_DEC.v".
     Found 16x19-bit Read Only RAM for signal <K>
     Summary:
 	inferred   1 RAM(s).
 Unit <BAUD_DEC> synthesized.
 
 Synthesizing Unit <tramelblaze_top>.
-    Related source file is "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\tramelblaze_top.v".
+    Related source file is "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\tramelblaze_top.v".
     Summary:
 	no macro.
 Unit <tramelblaze_top> synthesized.
 
 Synthesizing Unit <tramelblaze>.
-    Related source file is "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\tramelblaze.v".
+    Related source file is "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\tramelblaze.v".
         INTERRUPT_ADDRESS = 16'b0000111111111110
         FETCH = 5'b00000
         DECODE = 5'b00001
@@ -500,7 +500,7 @@ Synthesizing Unit <tramelblaze>.
 Unit <tramelblaze> synthesized.
 
 Synthesizing Unit <ADDR_DECODER>.
-    Related source file is "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\ADDR_DECODER.v".
+    Related source file is "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\ADDR_DECODER.v".
     Found 16-bit comparator lessequal for signal <n0000> created at line 48
     Summary:
 	inferred   1 Comparator(s).
@@ -508,7 +508,7 @@ Synthesizing Unit <ADDR_DECODER>.
 Unit <ADDR_DECODER> synthesized.
 
 Synthesizing Unit <AISO_RST>.
-    Related source file is "C:\Users\Chana\Desktop\CECS460\Project3_UART_RX\AISO_RST.v".
+    Related source file is "C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project3_UART_RX\AISO_RST.v".
     Found 1-bit register for signal <q1>.
     Found 1-bit register for signal <q2>.
     Summary:
@@ -977,11 +977,11 @@ SYS_CLK        |    8.861|         |         |         |
 
 
 Total REAL time to Xst completion: 11.00 secs
-Total CPU time to Xst completion: 10.53 secs
+Total CPU time to Xst completion: 11.43 secs
  
 --> 
 
-Total memory usage is 350256 kilobytes
+Total memory usage is 365696 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :    4 (   0 filtered)

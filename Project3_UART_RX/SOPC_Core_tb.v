@@ -64,6 +64,7 @@ module SOPC_Core_tb;
         
 		@(negedge SYS_CLK) SYS_RST = ~SYS_RST;
 
+
 	end
       
 endmodule

@@ -1,7 +1,7 @@
 ##############################################################
 #
 # Xilinx Core Generator version 14.7
-# Date: Mon Apr 16 20:04:11 2018
+# Date: Tue Apr 17 09:00:43 2018
 #
 ##############################################################
 #
@@ -46,7 +46,7 @@ CSET axi_id_width=4
 CSET axi_slave_type=Memory_Slave
 CSET axi_type=AXI4_Full
 CSET byte_size=9
-CSET coe_file=C:\Users\Chana\Desktop\CECS460\assembler\RX_Program.coe
+CSET coe_file=C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\assembler\RX_Program2.coe
 CSET collision_warnings=ALL
 CSET component_name=tb_rom
 CSET disable_collision_warnings=false
@@ -105,4 +105,4 @@ CSET write_width_b=16
 MISC pkg_timestamp=2012-11-19T16:22:25Z
 # END Extra information
 GENERATE
-# CRC: 4a4b58fe
+# CRC: f11714a3

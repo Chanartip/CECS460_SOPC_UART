@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <report-views version="2.0" >
  <header>
-  <DateModified>2018-04-16T15:15:07</DateModified>
+  <DateModified>2018-04-16T22:24:11</DateModified>
   <ModuleName>SOPC_Core</ModuleName>
   <SummaryTimeStamp>Unknown</SummaryTimeStamp>
-  <SavedFilePath>C:/Users/Chana/Desktop/CECS460/Project3_UART_RX/iseconfig/SOPC_Core.xreport</SavedFilePath>
-  <ImplementationReportsDirectory>C:/Users/Chana/Desktop/CECS460/Project3_UART_RX\</ImplementationReportsDirectory>
+  <SavedFilePath>C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project3_UART_RX/iseconfig/SOPC_Core.xreport</SavedFilePath>
+  <ImplementationReportsDirectory>C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project3_UART_RX\</ImplementationReportsDirectory>
   <DateInitialized>2018-04-16T11:31:41</DateInitialized>
   <EnableMessageFiltering>false</EnableMessageFiltering>
  </header>
