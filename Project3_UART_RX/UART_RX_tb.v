@@ -68,12 +68,12 @@ module UART_RX_tb;
 		i_clk = 0;
 		i_rst = 1;
 		i_read = 0;
-		i_rx = 1;
-		i_eight = 1;
-		i_pen = 1;
+		i_rx = 0;
+		i_eight = 0;
+		i_pen = 0;
 		i_ohel = 0;
 		i_rate = 19'd109;
-		$readmemb("output2.txt",mem);
+		$readmemb("output.txt",mem);
 		
 //		@(negedge i_clk) i_rst = ~i_rst;
 		#100 

@@ -19,19 +19,30 @@ ONE             EQU     0001
 TWO             EQU     0002
 THREE           EQU     0003
 FOUR            EQU     0004
-TIME_UP         EQU     5000
+FIVE            EQU     0005
+SIX             EQU     0006
+MAX_CHAR        EQU     0028
+TEN             EQU     000A
+ASCII           EQU     0030
 
 ;=============================================================
 ; ScratchPad alias
 ;=============================================================
-BANNER_BEGIN	EQU		0000
-BANNER_END		EQU		0097
-PROMPT_BEGIN    EQU	    0097
-PROMPT_END      EQU		00B3
-HOMETOWN_BEGIN  EQU		00B3
-HOMETOWN_END	EQU		00CB
-ECHO_BEGIN		EQU		00CB
-ECHO_END		EQU		00F4
+BANNER_BEGIN    EQU     0000
+BANNER_END      EQU     0097
+PROMPT_BEGIN    EQU     0097
+PROMPT_END      EQU     00B3
+HOMETOWN_BEGIN  EQU     00B3
+HOMETOWN_END    EQU     00CB
+CRLF_BEGIN      EQU     00CB
+CRLF_END        EQU     00CD
+BSSP_BEGIN      EQU     00CD
+BSSP_END        EQU     00D0
+COUNT_BEGIN     EQU     00D0
+COUNT_TEN       EQU     00D0
+COUNT_ONE       EQU     00D1
+COUNT_END       EQU     00D2
+
 ;=============================================================
 ; Register alias
 ;=============================================================
@@ -45,6 +56,8 @@ PRINT_FLAG      EQU     R7
 ECHO_END        EQU     R8
 UART_STATUS     EQU     R9
 CHAR_COUNT      EQU     RA
+HOW_MANY        EQU     RB
+RESULT          EQU     RC
 
 ;=============================================================
 ; Port alias
@@ -56,6 +69,7 @@ LED_PORT        EQU     0002
 ;=============================================================
 ; ASCII in uses
 ;=============================================================
+ASC_NULL   EQU   0000  ; NULL
 ASC_BS     EQU   0008  ; Back Space
 ASC_TAB    EQU   0009  ; Horizontal Tab
 ASC_LF     EQU   000A  ; <LF> Line Feed (new line)
@@ -109,8 +123,19 @@ ASC_Z      EQU   005A
 ;=============================================================
 ; Startup: Initialize the design at reset
 ;
+;   Procedure:
+;       - Reset and Set registers
+;       - Store Banner, Prompt, HOMETOWN, CRLF and BSSP
+;           in the ScratchPad RAM
+;       - Reset the index register to be ready for the next use.
+;       - Start the Program with Interrupt Enable
+;
+;   Main(){
+;       BLINK_LED();
+;   }
+;
 ;=============================================================
-			ADDRESS 0000
+            ADDRESS 0000
 INIT
 ; Initialize registers
             LOAD    TEMP_REG, ZEROS
@@ -124,12 +149,32 @@ INIT
             CALL    BANNER_INIT
             CALL    PROMPT_INIT
             CALL    HOMETOWN_INIT
-			
+
+            ; Initialize CRLF in ScratchPad
+            LOAD    TEMP_REG, ASC_CR
+            STORE   TEMP_REG, INDEX
+            ADD     INDEX, ONE
+            LOAD    TEMP_REG, ASC_LF
+            STORE   TEMP_REG, INDEX
+            ADD     INDEX, ONE
+
+            ; Initialize BSSP in ScratchPad
+            LOAD    TEMP_REG, ASC_BS
+            STORE   TEMP_REG, INDEX
+            ADD     INDEX, ONE
+            LOAD    TEMP_REG, ASC_SP
+            STORE   TEMP_REG, INDEX
+            ADD     INDEX, ONE
+            LOAD    TEMP_REG, ASC_BS
+            STORE   TEMP_REG, INDEX
+
+            AND     INDEX, ZEROS ; Reset to ZEROS to be ready to display
+
 START       ENINT
 
 ; Main Loop
 MAIN
-;            CALL    BLINK_LED
+            CALL    BLINK_LED
             JUMP    MAIN
 
 ;=============================================================
@@ -143,12 +188,11 @@ MAIN
 ;   //////////////////////////////////////////////////
 ;
 ;   by incrementing the memory pointer each time storing a character
-;   then reset the index to ZEROS for the next use in main program.
 ;
 ;   input registers: none
 ;   output registers: none
 ;=============================================================
-            ADDRESS 0030
+            ADDRESS 0040
 BANNER_INIT
             LOAD    TEMP_REG, ASC_SL
 SL_50       STORE   TEMP_REG, INDEX
@@ -327,7 +371,6 @@ DONE_BANNER
             STORE   TEMP_REG, INDEX
             ADD     INDEX, ONE          ; should be index for PROMPT BEGIN
 
-;            STORE   PROMPT_BEGIN, INDEX
             LOAD    COUNT, ZEROS
 
             RETURN
@@ -341,12 +384,10 @@ DONE_BANNER
 ;
 ;       PRESS ANY KEY TO CONTINUE...
 ;
-;       - then reset the index to ZEROS for the next use in main
-;
 ;   input registers: none
 ;   output registers: none
 ;=============================================================
-            ADDRESS 0160
+            ADDRESS 0170
 
 PROMPT_INIT
             LOAD    TEMP_REG, ASC_P
@@ -434,8 +475,6 @@ PROMPT_INIT
             STORE   TEMP_REG, INDEX
             ADD     INDEX, ONE          ; This INDEX should be HOMETOWN_BEGIN
 
-;            STORE   HOMETOWN_BEGIN, INDEX
-
             RETURN
 
 ;=============================================================
@@ -443,7 +482,7 @@ PROMPT_INIT
 ;       Store "MY HOMETOWN IS BANGKOK"
 ;
 ;=============================================================
-            ADDRESS 01F4
+            ADDRESS 0200
 
 HOMETOWN_INIT
             LOAD    TEMP_REG, ASC_M
@@ -512,14 +551,12 @@ HOMETOWN_INIT
             LOAD    TEMP_REG, ASC_K
             STORE   TEMP_REG, INDEX
             ADD     INDEX, ONE
-			LOAD    TEMP_REG, ASC_CR
+            LOAD    TEMP_REG, ASC_CR
             STORE   TEMP_REG, INDEX
             ADD     INDEX, ONE
             LOAD    TEMP_REG, ASC_LF
             STORE   TEMP_REG, INDEX
-            ADD     INDEX, ONE
-			
-            AND     INDEX, ZEROS ; Reset to ZEROS to be ready to display
+            ADD     INDEX, ONE    ; This INDEX should be CRLF_BEGIN
 
             RETURN
 
@@ -536,7 +573,7 @@ HOMETOWN_INIT
 ;   input registers: none
 ;   output registers: none
 ;=============================================================
-            ADDRESS 0280
+            ADDRESS 0290
 BLINK_LED
             LOAD    DELAY, FFFF
             LOAD    DELAY2, 0019
@@ -550,20 +587,92 @@ TAG
             XOR     LED, 00FF
             OUTPUT  LED, LED_PORT
             RETURN
+;=============================================================
+; Routine: BIN_TO_ASCII
+;
+;   function: converting a 16-bit number into ASCII.
+;       Dividing input CECS_COUNT by TEN_THOUSAND, ONE_THOUSAND,
+;           ONE_HUNDREDS, TEN, and ONE then stores the
+;           division at scratch-pad address 0011, 0012, 0013,
+;           0014, and 0015 consequently.
+;   pseudo code:
+;		HOW_MANY = 0
+;       RESULT = COUNT;
+;		while(RESULT-10 > 0){
+;			RESULT -= 10;
+;			HOW_MANY++;
+;		}
+;	
+;	Input Register: 
+;		COUNT - number of character received 
+;				from serial terminal.
+;
+;	Output Registers: 
+;		COUNT_TEN - stores ASCII of MSB of COUNT
+;		COUNT_ONE - stores ASCII of LSB of COUNT	
+;=============================================================
+
+; Address for BIN_TO_ASC
+            ADDRESS 0310
+
+BIN_TO_ASCII
+            LOAD    HOW_MANY, ZEROS
+            LOAD    RESULT, COUNT
+
+SUB_FIND
+            SUB     RESULT, TEN
+            JUMPC   DONE_FIND
+            ADD     HOW_MANY, ONE
+            JUMP    SUB_FIND
+DONE_FIND
+            ADD     RESULT, TEN
+            ADD     HOW_MANY, ASCII
+            STORE   HOW_MANY, COUNT_TEN
+
+            ADD     RESULT, ASCII
+            STORE   RESULT, COUNT_ONE
+
+            RETURN
 
 ;=============================================================
 ;   Subroutine: TX_FUNC
 ;
-;   case(PRINT_FLAG)
-;       BANNER:      PRINT_BANNER();
-;       PROMPT:      PRINT_PROMPT();
-;       HOMETOWN:    PRINT_HOMETOWN();
-;       default:     PRINT_ECHO();
-;   endcase
+;   function: Output a character to TramelBlaze through 
+;		DATA_PORT(0000) according to the current PRINT_FLAG.
+;		If the PRINT_FLAG is zeros, UART is not transmitting
+;		at the moment.
+;
+;	Procedure:
+;		if(PRINT_FLAG == 0) return;
+;		else{
+;			printf(Mem[index]);
+;			switch(PRINT_FLAG){
+;				case 0006: DISPLAY_COUNT();
+;				case 0005: DISPLAY_BSSP();
+;				case 0004: DISPLAY_BANNER();
+;				case 0003: DISPLAY_PROMPT();
+;				case 0002: DISPLAY_HOMETOWN();
+;				case 0001: DISPLAY_CRLF();
+;			}
+;		}
+;
+;	Input register:
+;		PRINT_FLAG - hold current printing mode.
 ;
 ;=============================================================
-            ADDRESS 02A0
+            ADDRESS 0330
 TX_FUNC
+            COMP    PRINT_FLAG, ZEROS
+            RETURNZ
+
+            FETCH   TEMP_REG, INDEX
+            OUTPUT  TEMP_REG, DATA_PORT
+            ADD     INDEX, ONE
+
+            COMP    PRINT_FLAG, SIX
+            JUMPZ   DISPLAY_COUNT
+            COMP    PRINT_FLAG, FIVE
+            JUMPZ   DISPLAY_BSSP
             COMP    PRINT_FLAG, FOUR
             JUMPZ   DISPLAY_BANNER
             COMP    PRINT_FLAG, THREE
@@ -571,82 +680,137 @@ TX_FUNC
             COMP    PRINT_FLAG, TWO
             JUMPZ   DISPLAY_HOMETOWN
             COMP    PRINT_FLAG, ONE
-            JUMPZ   DISPLAY_ECHO
+            JUMPZ   DISPLAY_CRLF
 
-			; maybe get input char here
-			INPUT	TEMP_REG, DATA_PORT
-			COMP	TEMP_REG, ASC_STAR
-			JUMPZ	SET_HOMETOWN
-			
-			
+            RETURN
+
+DISPLAY_COUNT
+            COMP    INDEX, COUNT_END
+            RETURNC
+            LOAD    INDEX, CRLF_BEGIN
+            LOAD    PRINT_FLAG, ONE
+            RETURN
+
+DISPLAY_BSSP
+            COMP    INDEX, BSSP_END
+            RETURNC
+            LOAD    PRINT_FLAG, ZEROS
             RETURN
 
 DISPLAY_BANNER
-            FETCH   TEMP_REG, INDEX
-            OUTPUT  TEMP_REG, DATA_PORT
-            ADD     INDEX, ONE
-
             COMP    INDEX, BANNER_END
             RETURNC
             LOAD    PRINT_FLAG, THREE
             RETURN
-			
-DISPLAY_PROMPT
-            FETCH   TEMP_REG, INDEX
-            OUTPUT  TEMP_REG, DATA_PORT
-            ADD     INDEX, ONE
 
+DISPLAY_PROMPT
             COMP    INDEX, PROMPT_END
             RETURNC
             LOAD    PRINT_FLAG, ZEROS
             RETURN
-			
-DISPLAY_HOMETOWN
-            FETCH   TEMP_REG, INDEX
-            OUTPUT  TEMP_REG, DATA_PORT
-            ADD     INDEX, ONE
 
+DISPLAY_HOMETOWN
             COMP    INDEX, HOMETOWN_END
             RETURNC
-			LOAD	INDEX, PROMPT_BEGIN
+            LOAD    INDEX, PROMPT_BEGIN
             LOAD    PRINT_FLAG, THREE
             RETURN
-			
-DISPLAY_ECHO
-            FETCH   TEMP_REG, INDEX
-            OUTPUT  TEMP_REG, DATA_PORT
-            ADD     INDEX, ONE
 
-            COMP    INDEX, ECHO_END
+DISPLAY_CRLF
+            COMP    INDEX, CRLF_END
             RETURNC
-            LOAD    PRINT_FLAG, ZEROS
+            LOAD    INDEX, PROMPT_BEGIN
+            LOAD    PRINT_FLAG, THREE
             RETURN
+
 
 ;=============================================================
 ;   Subroutine: RX_FUNC
 ;
+;	function: Setting the PRINT_FLAG and INDEX to be ready 
+;				to display on the Serial Terminal on the next
+;				TX interrupt according to the received 
+;				character input.
 ;
+;	Procedure: 
+;		if(PRINT_FLAG > 0) return;
+;		else{
+;			TEMP_REG = get_input();
+;
+;			switch(TEMP_REG){
+;				case '*'   : SET_HOMETOWN();
+;				case '<cr>': SET_CRLF();
+;				case '<bs>': SET_BSSP();
+;				case '@'   : SET_AT();
+;				default    : SET_ECHO();
+;			}
+;		}
 ;
 ;=============================================================
-            ADDRESS 0300
-RX_FUNC		
-			RETEN
-            ; COMP    PRINT_FLAG, ZEROS
-            ; RETURNNZ
+            ADDRESS 0400
+RX_FUNC
+            COMP    PRINT_FLAG, ZEROS
+            RETURNNZ
 
-            ; INPUT   TEMP_REG, DATA_PORT
-            ; COMP    TEMP_REG, ASC_STAR
-            ; JUMPZ   SET_HOMETOWN
+            INPUT   TEMP_REG, DATA_PORT
+            COMP    TEMP_REG, ZEROS
+            RETURNZ
 
-            ; RETURN
+            COMP    TEMP_REG, ASC_STAR
+            JUMPZ   SET_HOMETOWN
+
+            COMP    TEMP_REG, ASC_CR
+            JUMPZ   SET_CRLF
+
+            COMP    TEMP_REG, ASC_BS
+            JUMPZ   SET_BSSP
+
+            COMP    TEMP_REG, ASC_AT
+            JUMPZ   SET_AT
+
+SET_ECHO
+            COMP    COUNT, MAX_CHAR
+            JUMPZ   SET_CRLF
+            ADD     COUNT, ONE
+            OUTPUT  TEMP_REG, DATA_PORT
+
+            RETURN
 
 
 SET_HOMETOWN
             LOAD    PRINT_FLAG, TWO
             LOAD    INDEX, HOMETOWN_BEGIN
+            LOAD    TEMP_REG, ASC_NULL
+            OUTPUT  TEMP_REG, DATA_PORT
+            LOAD    COUNT, ZEROS
             RETURN
 
+SET_CRLF
+            LOAD    PRINT_FLAG, ONE
+            LOAD    INDEX, CRLF_BEGIN
+            LOAD    TEMP_REG, ASC_NULL
+            OUTPUT  TEMP_REG, DATA_PORT
+            LOAD    COUNT, ZEROS
+            RETURN
 
+SET_BSSP
+            COMP    COUNT, ZEROS
+            RETURNZ
+            LOAD    PRINT_FLAG, FIVE
+            LOAD    INDEX, BSSP_BEGIN
+            LOAD    TEMP_REG, ASC_NULL
+            OUTPUT  TEMP_REG, DATA_PORT
+            SUB     COUNT, ONE
+            RETURN
+
+SET_AT
+            CALL    BIN_TO_ASCII
+            LOAD    PRINT_FLAG, SIX
+            LOAD    INDEX, COUNT_BEGIN
+            LOAD    TEMP_REG, ASC_NULL
+            OUTPUT  TEMP_REG, DATA_PORT
+            LOAD    COUNT, ZEROS
+            RETURN
 
 ;=============================================================
 ; Sub Routine: Interrupt Service Routine(ISR)
@@ -666,15 +830,13 @@ SET_HOMETOWN
 ;
 ;   Procedure:
 ;       UART_STATUS = INPUT[STATUS_PORT];
-;       if(UART_STATUS&0x0001==1)
-;           READ_DATA_FUNC();
-;       else if(UART_STATUS&0x0002==1)
-;           PRINT_DATA_FUNC();
-;       else{
-;           if(INIT == TWO) DISPLAY_BANNER(); else
-;           if(INIT == ONE) DISPLAY_PROMPT();
-;           else INIT = 0;
-;       }
+;		UART_STATUS &= 0x0003;   
+;
+;       if(UART_STATUS = 0x0003) CALL_BOTH(); else
+;       if(UART_STATUS = 0x0002) TX_FUNC();   else
+;       if(UART_STATUS = 0x0001) RX_FUNC();
+;       else 
+;			return;
 ;
 ;   input registers: none
 ;       UART_STATUS - Reading the current UART status from UART;
@@ -689,13 +851,12 @@ ISR
 
             COMP    UART_STATUS, THREE
             JUMPZ   CALL_BOTH
-			
+
             COMP    UART_STATUS, TWO
             CALLZ   TX_FUNC                     ; TX is ready
 
             COMP    UART_STATUS, ONE
             CALLZ   RX_FUNC                     ; RX is ready
-
 
             RETEN
 

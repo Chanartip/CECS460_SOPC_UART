@@ -4,7 +4,7 @@ Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.08 secs
+Total CPU time to Xst completion: 0.09 secs
  
 --> Parameter xsthdpdir set to xst
 
@@ -773,8 +773,8 @@ Primitive and Black Box Usage:
 #      LUT2                        : 51
 #      LUT3                        : 105
 #      LUT4                        : 102
-#      LUT5                        : 131
-#      LUT6                        : 617
+#      LUT5                        : 132
+#      LUT6                        : 616
 #      MUXCY                       : 146
 #      MUXF7                       : 67
 #      MUXF8                       : 32
@@ -868,7 +868,7 @@ All values displayed in nanoseconds (ns)
 =========================================================================
 Timing constraint: Default period analysis for Clock 'SYS_CLK'
   Clock period: 8.861ns (frequency: 112.854MHz)
-  Total number of paths / destination ports: 3226074 / 1472
+  Total number of paths / destination ports: 3226058 / 1472
 -------------------------------------------------------------------------
 Delay:               8.861ns (Levels of Logic = 26)
   Source:            tb_top/tramelblaze/inst_reg_4_1 (FF)
@@ -976,12 +976,12 @@ SYS_CLK        |    8.861|         |         |         |
 =========================================================================
 
 
-Total REAL time to Xst completion: 11.00 secs
-Total CPU time to Xst completion: 11.43 secs
+Total REAL time to Xst completion: 12.00 secs
+Total CPU time to Xst completion: 12.08 secs
  
 --> 
 
-Total memory usage is 365696 kilobytes
+Total memory usage is 365808 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :    4 (   0 filtered)

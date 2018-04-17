@@ -1,29 +1,14 @@
-Running: C:\Xilinx\14.7\ISE_DS\ISE\bin\nt64\unwrapped\fuse.exe -intstyle ise -incremental -lib unisims_ver -lib unimacro_ver -lib xilinxcorelib_ver -lib secureip -o C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project3_UART_RX/SOPC_Core_tb_isim_beh.exe -prj C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project3_UART_RX/SOPC_Core_tb_beh.prj work.SOPC_Core_tb work.glbl 
+Running: C:\Xilinx\14.7\ISE_DS\ISE\bin\nt64\unwrapped\fuse.exe -intstyle ise -incremental -lib unisims_ver -lib unimacro_ver -lib xilinxcorelib_ver -lib secureip -o C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project3_UART_RX/UART_RX_tb_isim_beh.exe -prj C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project3_UART_RX/UART_RX_tb_beh.prj work.UART_RX_tb work.glbl 
 ISim P.20131013 (signature 0x7708f090)
 Number of CPUs detected in this system: 4
 Turning on mult-threading, number of parallel sub-compilation jobs: 8 
 Determining compilation order of HDL files
 Analyzing Verilog file "C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project3_UART_RX/RX_SHIFT_REG.v" into library work
 Analyzing Verilog file "C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project3_UART_RX/RX_REMAP.v" into library work
-Analyzing Verilog file "C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project3_UART_RX/SHIFT_R_FUNC.v" into library work
-Analyzing Verilog file "C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project3_UART_RX/SHIFT_R.v" into library work
 Analyzing Verilog file "C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project3_UART_RX/RX_DATAPATH.v" into library work
 Analyzing Verilog file "C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project3_UART_RX/RX_Control.v" into library work
-Analyzing Verilog file "C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project3_UART_RX/RS_FLOP.v" into library work
-Analyzing Verilog file "C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project3_UART_RX/ipcore_dir/stack_ram.v" into library work
-Analyzing Verilog file "C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project3_UART_RX/ipcore_dir/scratch_ram.v" into library work
-Analyzing Verilog file "C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project3_UART_RX/UART_TX.v" into library work
 Analyzing Verilog file "C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project3_UART_RX/UART_RX.v" into library work
-Analyzing Verilog file "C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project3_UART_RX/tramelblaze.v" into library work
-Analyzing Verilog file "C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project3_UART_RX/PED.v" into library work
-Analyzing Verilog file "C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project3_UART_RX/ipcore_dir/tb_rom.v" into library work
-Analyzing Verilog file "C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project3_UART_RX/BAUD_DEC.v" into library work
-Analyzing Verilog file "C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project3_UART_RX/UART_TOP.v" into library work
-Analyzing Verilog file "C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project3_UART_RX/tramelblaze_top.v" into library work
-Analyzing Verilog file "C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project3_UART_RX/AISO_RST.v" into library work
-Analyzing Verilog file "C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project3_UART_RX/ADDR_DECODER.v" into library work
-Analyzing Verilog file "C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project3_UART_RX/SOPC_Core.v" into library work
-Analyzing Verilog file "C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project3_UART_RX/SOPC_Core_tb.v" into library work
+Analyzing Verilog file "C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project3_UART_RX/UART_RX_tb.v" into library work
 Analyzing Verilog file "C:/Xilinx/14.7/ISE_DS/ISE//verilog/src/glbl.v" into library work
 Starting static elaboration
 Completed static elaboration
@@ -32,38 +17,11 @@ Compiling module RX_SHIFT_REG
 Compiling module RX_REMAP
 Compiling module RX_DATAPATH
 Compiling module UART_RX
-Compiling module RS_FLOP
-Compiling module SHIFT_R_FUNC
-Compiling module SHIFT_R
-Compiling module UART_TX
-Compiling module PED
-Compiling module BAUD_DEC
-Compiling module UART_TOP
-Compiling module BLK_MEM_GEN_V7_3_output_stage(C_...
-Compiling module BLK_MEM_GEN_V7_3_softecc_output_...
-Compiling module BLK_MEM_GEN_V7_3_mem_module(C_CO...
-Compiling module BLK_MEM_GEN_V7_3(C_FAMILY="spart...
-Compiling module stack_ram
-Compiling module BLK_MEM_GEN_V7_3_output_stage(C_...
-Compiling module BLK_MEM_GEN_V7_3_softecc_output_...
-Compiling module BLK_MEM_GEN_V7_3_mem_module(C_CO...
-Compiling module BLK_MEM_GEN_V7_3(C_FAMILY="spart...
-Compiling module scratch_ram
-Compiling module tramelblaze
-Compiling module BLK_MEM_GEN_V7_3_output_stage(C_...
-Compiling module BLK_MEM_GEN_V7_3_softecc_output_...
-Compiling module BLK_MEM_GEN_V7_3_mem_module(C_CO...
-Compiling module BLK_MEM_GEN_V7_3(C_FAMILY="spart...
-Compiling module tb_rom
-Compiling module tramelblaze_top
-Compiling module ADDR_DECODER
-Compiling module AISO_RST
-Compiling module SOPC_Core
-Compiling module SOPC_Core_tb
+Compiling module UART_RX_tb
 Compiling module glbl
 Time Resolution for simulation is 1ps.
-Waiting for 13 sub-compilation(s) to finish...
-Compiled 34 Verilog Units
-Built simulation executable C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project3_UART_RX/SOPC_Core_tb_isim_beh.exe
-Fuse Memory Usage: 34584 KB
-Fuse CPU Usage: 624 ms
+Waiting for 1 sub-compilation(s) to finish...
+Compiled 7 Verilog Units
+Built simulation executable C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project3_UART_RX/UART_RX_tb_isim_beh.exe
+Fuse Memory Usage: 28020 KB
+Fuse CPU Usage: 312 ms

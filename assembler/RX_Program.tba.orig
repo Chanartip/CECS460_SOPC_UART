@@ -7,7 +7,7 @@
 ;    Assignment: Project Three Receive Engine               ;
 ;                                                           ;
 ;    Current Version: 1.0                                   ;
-;    Date      : March 30, 2018                             ;
+;    Date      : April 16, 2018                             ;
 ;                                                           ;
 ;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^;
 
@@ -19,13 +19,22 @@ ONE             EQU     0001
 TWO             EQU     0002
 THREE           EQU     0003
 FOUR            EQU     0004
-TIME_UP         EQU     5000
+FIVE			EQU		0005
+MAX_CHAR        EQU     0028
 
 ;=============================================================
 ; ScratchPad alias
 ;=============================================================
-
-
+BANNER_BEGIN	EQU		0000
+BANNER_END		EQU		0097
+PROMPT_BEGIN    EQU	    0097
+PROMPT_END      EQU		00B3
+HOMETOWN_BEGIN  EQU		00B3
+HOMETOWN_END	EQU		00CB
+CRLF_BEGIN		EQU		00CB
+CRLF_END		EQU		00CD
+BSSP_BEGIN		EQU		00CD
+BSSP_END		EQU     00D0
 ;=============================================================
 ; Register alias
 ;=============================================================
@@ -36,12 +45,9 @@ LED             EQU     R4
 DELAY           EQU     R5
 DELAY2          EQU     R6
 PRINT_FLAG      EQU     R7
-PROMPT_BEGIN    EQU     R8
-HOMETOWN_BEGIN  EQU     R9
-HOMETOWN_END    EQU     RA
-ECHO_END        EQU     RB
-UART_STATUS     EQU     RC
-CHAR_COUNT      EQU     RD
+ECHO_END        EQU     R8
+UART_STATUS     EQU     R9
+CHAR_COUNT      EQU     RA
 
 ;=============================================================
 ; Port alias
@@ -53,6 +59,7 @@ LED_PORT        EQU     0002
 ;=============================================================
 ; ASCII in uses
 ;=============================================================
+ASC_NULL   EQU   0000  ; NULL
 ASC_BS     EQU   0008  ; Back Space
 ASC_TAB    EQU   0009  ; Horizontal Tab
 ASC_LF     EQU   000A  ; <LF> Line Feed (new line)
@@ -115,8 +122,6 @@ INIT
             LOAD    INDEX, ZEROS
             LOAD    LED, ZEROS
             LOAD    PRINT_FLAG, FOUR
-            LOAD    PROMPT_BEGIN, ZEROS
-            LOAD    HOMETOWN_BEGIN, ZEROS
             LOAD    UART_STATUS, ZEROS
             LOAD    CHAR_COUNT, ZEROS
 
@@ -124,11 +129,31 @@ INIT
             CALL    PROMPT_INIT
             CALL    HOMETOWN_INIT
 			
+			; Initialize CRLF
+            LOAD    TEMP_REG, ASC_CR
+            STORE   TEMP_REG, INDEX
+            ADD     INDEX, ONE
+            LOAD    TEMP_REG, ASC_LF
+            STORE   TEMP_REG, INDEX
+            ADD     INDEX, ONE
+			
+			; Initialize BSSP
+			LOAD    TEMP_REG, ASC_BS
+            STORE   TEMP_REG, INDEX
+            ADD     INDEX, ONE
+            LOAD    TEMP_REG, ASC_SP
+            STORE   TEMP_REG, INDEX
+            ADD     INDEX, ONE
+			LOAD    TEMP_REG, ASC_BS
+            STORE   TEMP_REG, INDEX
+			
+            AND     INDEX, ZEROS ; Reset to ZEROS to be ready to display
+			
 START       ENINT
 
 ; Main Loop
 MAIN
-            CALL    BLINK_LED
+            ; CALL    BLINK_LED
             JUMP    MAIN
 
 ;=============================================================
@@ -147,7 +172,7 @@ MAIN
 ;   input registers: none
 ;   output registers: none
 ;=============================================================
-            ADDRESS 0030
+            ADDRESS 0034
 BANNER_INIT
             LOAD    TEMP_REG, ASC_SL
 SL_50       STORE   TEMP_REG, INDEX
@@ -326,7 +351,6 @@ DONE_BANNER
             STORE   TEMP_REG, INDEX
             ADD     INDEX, ONE          ; should be index for PROMPT BEGIN
 
-            STORE   PROMPT_BEGIN, INDEX
             LOAD    COUNT, ZEROS
 
             RETURN
@@ -433,8 +457,6 @@ PROMPT_INIT
             STORE   TEMP_REG, INDEX
             ADD     INDEX, ONE          ; This INDEX should be HOMETOWN_BEGIN
 
-            STORE   HOMETOWN_BEGIN, INDEX
-
             RETURN
 
 ;=============================================================
@@ -511,10 +533,13 @@ HOMETOWN_INIT
             LOAD    TEMP_REG, ASC_K
             STORE   TEMP_REG, INDEX
             ADD     INDEX, ONE
-
-            STORE   HOMETOWN_END, INDEX
-            AND     INDEX, ZEROS ; Reset to ZEROS to be ready to display
-
+			LOAD    TEMP_REG, ASC_CR
+            STORE   TEMP_REG, INDEX
+            ADD     INDEX, ONE
+            LOAD    TEMP_REG, ASC_LF
+            STORE   TEMP_REG, INDEX
+            ADD     INDEX, ONE	  ; This INDEX should be CRLF_BEGIN
+			
             RETURN
 
 ;=============================================================
@@ -533,7 +558,7 @@ HOMETOWN_INIT
             ADDRESS 0280
 BLINK_LED
             LOAD    DELAY, FFFF
-            LOAD    DELAY2, 0025
+            LOAD    DELAY2, 0019
 TAG
             SUB     DELAY, ONE
             JUMPNZ  TAG
@@ -558,13 +583,15 @@ TAG
 ;=============================================================
             ADDRESS 02A0
 TX_FUNC
-            COMP    PRINT_FLAG, ZEROS
-            RETURNZ
-
+			COMP 	PRINT_FLAG, ZEROS
+			RETURNZ
+			
             FETCH   TEMP_REG, INDEX
             OUTPUT  TEMP_REG, DATA_PORT
             ADD     INDEX, ONE
 
+			COMP 	PRINT_FLAG, FIVE
+			JUMPZ	DISPLAY_BSSP
             COMP    PRINT_FLAG, FOUR
             JUMPZ   DISPLAY_BANNER
             COMP    PRINT_FLAG, THREE
@@ -572,30 +599,40 @@ TX_FUNC
             COMP    PRINT_FLAG, TWO
             JUMPZ   DISPLAY_HOMETOWN
             COMP    PRINT_FLAG, ONE
-            JUMPZ   DISPLAY_ECHO
+            JUMPZ   DISPLAY_CRLF
 
-            AND     PRINT_FLAG, ZEROS
             RETURN
 
+DISPLAY_BSSP
+			COMP	INDEX, BSSP_END
+			RETURNC
+			LOAD	PRINT_FLAG, ZEROS
+			RETURN
+			
 DISPLAY_BANNER
-            COMP    INDEX, PROMPT_BEGIN
+            COMP    INDEX, BANNER_END
             RETURNC
             LOAD    PRINT_FLAG, THREE
             RETURN
+			
 DISPLAY_PROMPT
-            COMP    INDEX, HOMETOWN_BEGIN
+            COMP    INDEX, PROMPT_END
             RETURNC
             LOAD    PRINT_FLAG, ZEROS
             RETURN
+			
 DISPLAY_HOMETOWN
             COMP    INDEX, HOMETOWN_END
             RETURNC
-            LOAD    PRINT_FLAG, ZEROS
+			LOAD	INDEX, PROMPT_BEGIN
+            LOAD    PRINT_FLAG, THREE
             RETURN
-DISPLAY_ECHO
-            COMP    INDEX, ECHO_END
+			
+DISPLAY_CRLF
+            COMP    INDEX, CRLF_END
             RETURNC
-            LOAD    PRINT_FLAG, ZEROS
+			LOAD	INDEX, PROMPT_BEGIN
+            LOAD    PRINT_FLAG, THREE
             RETURN
 
 ;=============================================================
@@ -605,23 +642,58 @@ DISPLAY_ECHO
 ;
 ;=============================================================
             ADDRESS 0300
-RX_FUNC
+RX_FUNC		
             COMP    PRINT_FLAG, ZEROS
             RETURNNZ
 
             INPUT   TEMP_REG, DATA_PORT
+			COMP	TEMP_REG, ZEROS
+			RETURNZ
+			
             COMP    TEMP_REG, ASC_STAR
             JUMPZ   SET_HOMETOWN
 
+			COMP	TEMP_REG, ASC_CR
+			JUMPZ	SET_CRLF
+			
+			COMP	TEMP_REG, ASC_BS
+			JUMPZ	SET_BSSP
+			
+SET_ECHO			
+			COMP	COUNT, MAX_CHAR
+			JUMPZ	SET_CRLF
+			ADD		COUNT, ONE
+			OUTPUT	TEMP_REG, DATA_PORT
+			
             RETURN
 
 
 SET_HOMETOWN
             LOAD    PRINT_FLAG, TWO
             LOAD    INDEX, HOMETOWN_BEGIN
+			LOAD	TEMP_REG, ASC_NULL
+			OUTPUT	TEMP_REG, DATA_PORT
+			LOAD	COUNT, ZEROS
             RETURN
 
-
+SET_CRLF		
+			LOAD	PRINT_FLAG, ONE
+			LOAD	INDEX, CRLF_BEGIN
+			LOAD	TEMP_REG, ASC_NULL
+			OUTPUT	TEMP_REG, DATA_PORT
+			LOAD	COUNT, ZEROS
+			RETURN
+			
+SET_BSSP
+			COMP	COUNT, ZEROS
+			RETURNZ
+			LOAD	PRINT_FLAG, FIVE
+			LOAD	INDEX, BSSP_BEGIN
+			LOAD	TEMP_REG, ASC_NULL
+			OUTPUT	TEMP_REG, DATA_PORT
+			SUB		COUNT, ONE
+			RETURN
+	
 
 ;=============================================================
 ; Sub Routine: Interrupt Service Routine(ISR)
@@ -662,20 +734,20 @@ ISR
             INPUT   UART_STATUS, STATUS_PORT
             AND     UART_STATUS, THREE          ; check TX_rdy & RX_rdy
 
+            COMP    UART_STATUS, THREE
+            JUMPZ   CALL_BOTH
+			
             COMP    UART_STATUS, TWO
             CALLZ   TX_FUNC                     ; TX is ready
 
-;            COMP    UART_STATUS, ONE
-;            CALLZ   RX_FUNC                     ; RX is ready
-
-            COMP    UART_STATUS, THREE
-            JUMPZ   CALL_BOTH
+            COMP    UART_STATUS, ONE
+            CALLZ   RX_FUNC                     ; RX is ready
 
             RETEN
 
 CALL_BOTH
             CALL    TX_FUNC                     ; prioritize to TX
-;            CALL    RX_FUNC
+            CALL    RX_FUNC
             RETEN
 
 ;=============================================================

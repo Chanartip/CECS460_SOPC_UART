@@ -19,19 +19,30 @@
                TWO             EQU     0002
                THREE           EQU     0003
                FOUR            EQU     0004
-               TIME_UP         EQU     5000
+               FIVE            EQU     0005
+               SIX             EQU     0006
+               MAX_CHAR        EQU     0028
+               TEN             EQU     000A
+               ASCII           EQU     0030
                
                ;=============================================================
                ; ScratchPad alias
                ;=============================================================
-               BANNER_BEGIN	EQU		0000
-               BANNER_END		EQU		0097
-               PROMPT_BEGIN    EQU	    0097
-               PROMPT_END      EQU		00B3
-               HOMETOWN_BEGIN  EQU		00B3
-               HOMETOWN_END	EQU		00C9
-               ECHO_BEGIN		EQU		00C9
-               ECHO_END		EQU		00F2
+               BANNER_BEGIN    EQU     0000
+               BANNER_END      EQU     0097
+               PROMPT_BEGIN    EQU     0097
+               PROMPT_END      EQU     00B3
+               HOMETOWN_BEGIN  EQU     00B3
+               HOMETOWN_END    EQU     00CB
+               CRLF_BEGIN      EQU     00CB
+               CRLF_END        EQU     00CD
+               BSSP_BEGIN      EQU     00CD
+               BSSP_END        EQU     00D0
+               COUNT_BEGIN     EQU     00D0
+               COUNT_TEN       EQU     00D0
+               COUNT_ONE       EQU     00D1
+               COUNT_END       EQU     00D2
+               
                ;=============================================================
                ; Register alias
                ;=============================================================
@@ -45,6 +56,8 @@
                ECHO_END        EQU     R8
                UART_STATUS     EQU     R9
                CHAR_COUNT      EQU     RA
+               HOW_MANY        EQU     RB
+               RESULT          EQU     RC
                
                ;=============================================================
                ; Port alias
@@ -56,6 +69,7 @@
                ;=============================================================
                ; ASCII in uses
                ;=============================================================
+               ASC_NULL   EQU   0000  ; NULL
                ASC_BS     EQU   0008  ; Back Space
                ASC_TAB    EQU   0009  ; Horizontal Tab
                ASC_LF     EQU   000A  ; <LF> Line Feed (new line)
@@ -110,7 +124,7 @@
                ; Startup: Initialize the design at reset
                ;
                ;=============================================================
-               			ADDRESS 0000
+                           ADDRESS 0000
                INIT
                ; Initialize registers
                            LOAD    TEMP_REG, ZEROS
@@ -129,19 +143,54 @@
 000C AE0A 0000
                
                            CALL    BANNER_INIT
-000E 8E00 0030
+000E 8E00 0040
                            CALL    PROMPT_INIT
-0010 8E00 0160
+0010 8E00 0170
                            CALL    HOMETOWN_INIT
-0012 8E00 01f4
-               			
+0012 8E00 0200
+               
+                           ; Initialize CRLF
+                           LOAD    TEMP_REG, ASC_CR
+0014 AE01 000D
+                           STORE   TEMP_REG, INDEX
+7631
+                           ADD     INDEX, ONE
+0017 8203 0001
+                           LOAD    TEMP_REG, ASC_LF
+0019 AE01 000A
+                           STORE   TEMP_REG, INDEX
+7631
+                           ADD     INDEX, ONE
+001C 8203 0001
+               
+                           ; Initialize BSSP
+                           LOAD    TEMP_REG, ASC_BS
+001E AE01 0008
+                           STORE   TEMP_REG, INDEX
+7631
+                           ADD     INDEX, ONE
+0021 8203 0001
+                           LOAD    TEMP_REG, ASC_SP
+0023 AE01 0020
+                           STORE   TEMP_REG, INDEX
+7631
+                           ADD     INDEX, ONE
+0026 8203 0001
+                           LOAD    TEMP_REG, ASC_BS
+0028 AE01 0008
+                           STORE   TEMP_REG, INDEX
+7631
+               
+                           AND     INDEX, ZEROS ; Reset to ZEROS to be ready to display
+002B 8A03 0000
+               
                START       ENINT
-0014 1E00               
+002D 1E00               
                ; Main Loop
                MAIN
-               ;            CALL    BLINK_LED
+                           ; CALL    BLINK_LED
                            JUMP    MAIN
-0015 A400 0015
+002E A400 002e
                
                ;=============================================================
                ; Subroutine: BANNER_INIT
@@ -159,361 +208,360 @@
                ;   input registers: none
                ;   output registers: none
                ;=============================================================
-                           ADDRESS 0030
+                           ADDRESS 0040
                BANNER_INIT
                            LOAD    TEMP_REG, ASC_SL
-0030 AE01 002F
+0040 AE01 002F
                SL_50       STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0033 8203 0001
+0043 8203 0001
                            ADD     COUNT, ONE
-0035 8202 0001
+0045 8202 0001
                            COMP    COUNT, 0031         ; if count < 0d50
-0037 9802 0031
+0047 9802 0031
                            JUMPC   SL_50
-0039 A600 0032
+0049 A600 0042
                            LOAD    COUNT, ZEROS
-003B AE02 0000
+004B AE02 0000
                
                            COMP    INDEX, 0064         ; if index > 0d100
-003D 9803 0064
+004D 9803 0064
                            JUMPNC  DONE_BANNER
-003F A800 0144
+004F A800 0154
                
                            LOAD    TEMP_REG, ASC_CR
-0041 AE01 000D
+0051 AE01 000D
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0044 8203 0001
+0054 8203 0001
                            LOAD    TEMP_REG, ASC_LF
-0046 AE01 000A
+0056 AE01 000A
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0049 8203 0001
+0059 8203 0001
                
                            LOAD    TEMP_REG, ASC_TAB
-004B AE01 0009
+005B AE01 0009
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-004E 8203 0001
+005E 8203 0001
                            LOAD    TEMP_REG, ASC_C
-0050 AE01 0043
+0060 AE01 0043
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0053 8203 0001
+0063 8203 0001
                            LOAD    TEMP_REG, ASC_E
-0055 AE01 0045
+0065 AE01 0045
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0058 8203 0001
+0068 8203 0001
                            LOAD    TEMP_REG, ASC_C
-005A AE01 0043
+006A AE01 0043
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-005D 8203 0001
+006D 8203 0001
                            LOAD    TEMP_REG, ASC_S
-005F AE01 0053
+006F AE01 0053
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0062 8203 0001
+0072 8203 0001
                            LOAD    TEMP_REG, ASC_4
-0064 AE01 0034
+0074 AE01 0034
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0067 8203 0001
+0077 8203 0001
                            LOAD    TEMP_REG, ASC_6
-0069 AE01 0036
+0079 AE01 0036
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-006C 8203 0001
+007C 8203 0001
                            LOAD    TEMP_REG, ASC_0
-006E AE01 0030
+007E AE01 0030
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0071 8203 0001
+0081 8203 0001
                            LOAD    TEMP_REG, ASC_SP
-0073 AE01 0020
+0083 AE01 0020
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0076 8203 0001
+0086 8203 0001
                            LOAD    TEMP_REG, ASC_P
-0078 AE01 0050
+0088 AE01 0050
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-007B 8203 0001
+008B 8203 0001
                            LOAD    TEMP_REG, ASC_R
-007D AE01 0052
+008D AE01 0052
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0080 8203 0001
+0090 8203 0001
                            LOAD    TEMP_REG, ASC_O
-0082 AE01 004F
+0092 AE01 004F
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0085 8203 0001
+0095 8203 0001
                            LOAD    TEMP_REG, ASC_J
-0087 AE01 004A
+0097 AE01 004A
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-008A 8203 0001
+009A 8203 0001
                            LOAD    TEMP_REG, ASC_E
-008C AE01 0045
+009C AE01 0045
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-008F 8203 0001
+009F 8203 0001
                            LOAD    TEMP_REG, ASC_C
-0091 AE01 0043
+00A1 AE01 0043
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0094 8203 0001
+00A4 8203 0001
                            LOAD    TEMP_REG, ASC_T
-0096 AE01 0054
+00A6 AE01 0054
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0099 8203 0001
+00A9 8203 0001
                            LOAD    TEMP_REG, ASC_3
-009B AE01 0033
+00AB AE01 0033
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-009E 8203 0001
+00AE 8203 0001
                            LOAD    TEMP_REG, ASC_CR
-00A0 AE01 000D
+00B0 AE01 000D
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-00A3 8203 0001
+00B3 8203 0001
                            LOAD    TEMP_REG, ASC_LF
-00A5 AE01 000A
+00B5 AE01 000A
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-00A8 8203 0001
+00B8 8203 0001
                            LOAD    TEMP_REG, ASC_TAB
-00AA AE01 0009
+00BA AE01 0009
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-00AD 8203 0001
+00BD 8203 0001
                            LOAD    TEMP_REG, ASC_B
-00AF AE01 0042
+00BF AE01 0042
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-00B2 8203 0001
+00C2 8203 0001
                            LOAD    TEMP_REG, ASC_Y
-00B4 AE01 0059
+00C4 AE01 0059
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-00B7 8203 0001
+00C7 8203 0001
                            LOAD    TEMP_REG, ASC_CR
-00B9 AE01 000D
+00C9 AE01 000D
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-00BC 8203 0001
+00CC 8203 0001
                            LOAD    TEMP_REG, ASC_LF
-00BE AE01 000A
+00CE AE01 000A
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-00C1 8203 0001
+00D1 8203 0001
                            LOAD    TEMP_REG, ASC_TAB
-00C3 AE01 0009
+00D3 AE01 0009
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-00C6 8203 0001
+00D6 8203 0001
                            LOAD    TEMP_REG, ASC_C
-00C8 AE01 0043
+00D8 AE01 0043
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-00CB 8203 0001
+00DB 8203 0001
                            LOAD    TEMP_REG, ASC_H
-00CD AE01 0048
+00DD AE01 0048
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-00D0 8203 0001
+00E0 8203 0001
                            LOAD    TEMP_REG, ASC_A
-00D2 AE01 0041
+00E2 AE01 0041
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-00D5 8203 0001
+00E5 8203 0001
                            LOAD    TEMP_REG, ASC_N
-00D7 AE01 004E
+00E7 AE01 004E
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-00DA 8203 0001
+00EA 8203 0001
                            LOAD    TEMP_REG, ASC_A
-00DC AE01 0041
+00EC AE01 0041
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-00DF 8203 0001
+00EF 8203 0001
                            LOAD    TEMP_REG, ASC_R
-00E1 AE01 0052
+00F1 AE01 0052
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-00E4 8203 0001
+00F4 8203 0001
                            LOAD    TEMP_REG, ASC_T
-00E6 AE01 0054
+00F6 AE01 0054
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-00E9 8203 0001
+00F9 8203 0001
                            LOAD    TEMP_REG, ASC_I
-00EB AE01 0049
+00FB AE01 0049
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-00EE 8203 0001
+00FE 8203 0001
                            LOAD    TEMP_REG, ASC_P
-00F0 AE01 0050
+0100 AE01 0050
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-00F3 8203 0001
+0103 8203 0001
                            LOAD    TEMP_REG, ASC_SP
-00F5 AE01 0020
+0105 AE01 0020
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-00F8 8203 0001
+0108 8203 0001
                            LOAD    TEMP_REG, ASC_S
-00FA AE01 0053
+010A AE01 0053
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-00FD 8203 0001
+010D 8203 0001
                            LOAD    TEMP_REG, ASC_O
-00FF AE01 004F
+010F AE01 004F
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0102 8203 0001
+0112 8203 0001
                            LOAD    TEMP_REG, ASC_O
-0104 AE01 004F
+0114 AE01 004F
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0107 8203 0001
+0117 8203 0001
                            LOAD    TEMP_REG, ASC_N
-0109 AE01 004E
+0119 AE01 004E
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-010C 8203 0001
+011C 8203 0001
                            LOAD    TEMP_REG, ASC_T
-010E AE01 0054
+011E AE01 0054
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0111 8203 0001
+0121 8203 0001
                            LOAD    TEMP_REG, ASC_H
-0113 AE01 0048
+0123 AE01 0048
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0116 8203 0001
+0126 8203 0001
                            LOAD    TEMP_REG, ASC_O
-0118 AE01 004F
+0128 AE01 004F
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-011B 8203 0001
+012B 8203 0001
                            LOAD    TEMP_REG, ASC_R
-011D AE01 0052
+012D AE01 0052
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0120 8203 0001
+0130 8203 0001
                            LOAD    TEMP_REG, ASC_N
-0122 AE01 004E
+0132 AE01 004E
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0125 8203 0001
+0135 8203 0001
                            LOAD    TEMP_REG, ASC_W
-0127 AE01 0057
+0137 AE01 0057
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-012A 8203 0001
+013A 8203 0001
                            LOAD    TEMP_REG, ASC_A
-012C AE01 0041
+013C AE01 0041
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-012F 8203 0001
+013F 8203 0001
                            LOAD    TEMP_REG, ASC_N
-0131 AE01 004E
+0141 AE01 004E
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0134 8203 0001
+0144 8203 0001
                            LOAD    TEMP_REG, ASC_CR
-0136 AE01 000D
+0146 AE01 000D
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0139 8203 0001
+0149 8203 0001
                            LOAD    TEMP_REG, ASC_LF
-013B AE01 000A
+014B AE01 000A
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-013E 8203 0001
+014E 8203 0001
                
                            LOAD    TEMP_REG, ASC_SL
-0140 AE01 002F
+0150 AE01 002F
                            JUMP    SL_50
-0142 A400 0032
+0152 A400 0042
                
                DONE_BANNER
                            LOAD    TEMP_REG, ASC_CR
-0144 AE01 000D
+0154 AE01 000D
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0147 8203 0001
+0157 8203 0001
                            LOAD    TEMP_REG, ASC_LF
-0149 AE01 000A
+0159 AE01 000A
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE          ; should be index for PROMPT BEGIN
-014C 8203 0001
+015C 8203 0001
                
-               ;            STORE   PROMPT_BEGIN, INDEX
                            LOAD    COUNT, ZEROS
-014E AE02 0000
+015E AE02 0000
                
                            RETURN
-0150 3A00               
+0160 3A00               
                ;=============================================================
                ; Subroutine:   PROMPT_INIT
                ;   Store a Prompt into the ScratchPad Memory
@@ -528,329 +576,335 @@
                ;   input registers: none
                ;   output registers: none
                ;=============================================================
-                           ADDRESS 0160
+                           ADDRESS 0170
                
                PROMPT_INIT
                            LOAD    TEMP_REG, ASC_P
-0160 AE01 0050
+0170 AE01 0050
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0163 8203 0001
+0173 8203 0001
                            LOAD    TEMP_REG, ASC_R
-0165 AE01 0052
+0175 AE01 0052
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0168 8203 0001
+0178 8203 0001
                            LOAD    TEMP_REG, ASC_E
-016A AE01 0045
+017A AE01 0045
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-016D 8203 0001
+017D 8203 0001
                            LOAD    TEMP_REG, ASC_S
-016F AE01 0053
+017F AE01 0053
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0172 8203 0001
+0182 8203 0001
                            LOAD    TEMP_REG, ASC_S
-0174 AE01 0053
+0184 AE01 0053
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0177 8203 0001
+0187 8203 0001
                            LOAD    TEMP_REG, ASC_SP
-0179 AE01 0020
+0189 AE01 0020
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-017C 8203 0001
+018C 8203 0001
                            LOAD    TEMP_REG, ASC_A
-017E AE01 0041
+018E AE01 0041
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0181 8203 0001
+0191 8203 0001
                            LOAD    TEMP_REG, ASC_N
-0183 AE01 004E
+0193 AE01 004E
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0186 8203 0001
+0196 8203 0001
                            LOAD    TEMP_REG, ASC_Y
-0188 AE01 0059
+0198 AE01 0059
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-018B 8203 0001
+019B 8203 0001
                            LOAD    TEMP_REG, ASC_SP
-018D AE01 0020
+019D AE01 0020
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0190 8203 0001
+01A0 8203 0001
                            LOAD    TEMP_REG, ASC_K
-0192 AE01 004B
+01A2 AE01 004B
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0195 8203 0001
+01A5 8203 0001
                            LOAD    TEMP_REG, ASC_E
-0197 AE01 0045
+01A7 AE01 0045
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-019A 8203 0001
+01AA 8203 0001
                            LOAD    TEMP_REG, ASC_Y
-019C AE01 0059
+01AC AE01 0059
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-019F 8203 0001
+01AF 8203 0001
                            LOAD    TEMP_REG, ASC_SP
-01A1 AE01 0020
+01B1 AE01 0020
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-01A4 8203 0001
+01B4 8203 0001
                            LOAD    TEMP_REG, ASC_T
-01A6 AE01 0054
+01B6 AE01 0054
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-01A9 8203 0001
+01B9 8203 0001
                            LOAD    TEMP_REG, ASC_O
-01AB AE01 004F
+01BB AE01 004F
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-01AE 8203 0001
+01BE 8203 0001
                            LOAD    TEMP_REG, ASC_SP
-01B0 AE01 0020
+01C0 AE01 0020
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-01B3 8203 0001
+01C3 8203 0001
                            LOAD    TEMP_REG, ASC_C
-01B5 AE01 0043
+01C5 AE01 0043
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-01B8 8203 0001
+01C8 8203 0001
                            LOAD    TEMP_REG, ASC_O
-01BA AE01 004F
+01CA AE01 004F
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-01BD 8203 0001
+01CD 8203 0001
                            LOAD    TEMP_REG, ASC_N
-01BF AE01 004E
+01CF AE01 004E
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-01C2 8203 0001
+01D2 8203 0001
                            LOAD    TEMP_REG, ASC_T
-01C4 AE01 0054
+01D4 AE01 0054
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-01C7 8203 0001
+01D7 8203 0001
                            LOAD    TEMP_REG, ASC_I
-01C9 AE01 0049
+01D9 AE01 0049
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-01CC 8203 0001
+01DC 8203 0001
                            LOAD    TEMP_REG, ASC_N
-01CE AE01 004E
+01DE AE01 004E
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-01D1 8203 0001
+01E1 8203 0001
                            LOAD    TEMP_REG, ASC_U
-01D3 AE01 0055
+01E3 AE01 0055
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-01D6 8203 0001
+01E6 8203 0001
                            LOAD    TEMP_REG, ASC_E
-01D8 AE01 0045
+01E8 AE01 0045
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-01DB 8203 0001
+01EB 8203 0001
                            LOAD    TEMP_REG, ASC_DOT
-01DD AE01 002E
+01ED AE01 002E
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-01E0 8203 0001
+01F0 8203 0001
                            LOAD    TEMP_REG, ASC_DOT
-01E2 AE01 002E
+01F2 AE01 002E
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-01E5 8203 0001
+01F5 8203 0001
                            LOAD    TEMP_REG, ASC_DOT
-01E7 AE01 002E
+01F7 AE01 002E
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE          ; This INDEX should be HOMETOWN_BEGIN
-01EA 8203 0001
-               
-               ;            STORE   HOMETOWN_BEGIN, INDEX
+01FA 8203 0001
                
                            RETURN
-01EC 3A00               
+01FC 3A00               
                ;=============================================================
                ; Sub Routine: HOMETOWN_INIT
                ;       Store "MY HOMETOWN IS BANGKOK"
                ;
                ;=============================================================
-                           ADDRESS 01F4
+                           ADDRESS 0200
                
                HOMETOWN_INIT
                            LOAD    TEMP_REG, ASC_M
-01F4 AE01 004D
+0200 AE01 004D
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-01F7 8203 0001
+0203 8203 0001
                            LOAD    TEMP_REG, ASC_Y
-01F9 AE01 0059
+0205 AE01 0059
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-01FC 8203 0001
+0208 8203 0001
                            LOAD    TEMP_REG, ASC_SP
-01FE AE01 0020
+020A AE01 0020
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0201 8203 0001
+020D 8203 0001
                            LOAD    TEMP_REG, ASC_H
-0203 AE01 0048
+020F AE01 0048
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0206 8203 0001
+0212 8203 0001
                            LOAD    TEMP_REG, ASC_O
-0208 AE01 004F
+0214 AE01 004F
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-020B 8203 0001
+0217 8203 0001
                            LOAD    TEMP_REG, ASC_M
-020D AE01 004D
+0219 AE01 004D
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0210 8203 0001
+021C 8203 0001
                            LOAD    TEMP_REG, ASC_E
-0212 AE01 0045
+021E AE01 0045
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0215 8203 0001
+0221 8203 0001
                            LOAD    TEMP_REG, ASC_T
-0217 AE01 0054
+0223 AE01 0054
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-021A 8203 0001
+0226 8203 0001
                            LOAD    TEMP_REG, ASC_O
-021C AE01 004F
+0228 AE01 004F
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-021F 8203 0001
+022B 8203 0001
                            LOAD    TEMP_REG, ASC_W
-0221 AE01 0057
+022D AE01 0057
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0224 8203 0001
+0230 8203 0001
                            LOAD    TEMP_REG, ASC_N
-0226 AE01 004E
+0232 AE01 004E
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0229 8203 0001
+0235 8203 0001
                            LOAD    TEMP_REG, ASC_SP
-022B AE01 0020
+0237 AE01 0020
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-022E 8203 0001
+023A 8203 0001
                            LOAD    TEMP_REG, ASC_I
-0230 AE01 0049
+023C AE01 0049
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0233 8203 0001
+023F 8203 0001
                            LOAD    TEMP_REG, ASC_S
-0235 AE01 0053
+0241 AE01 0053
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0238 8203 0001
+0244 8203 0001
                            LOAD    TEMP_REG, ASC_SP
-023A AE01 0020
+0246 AE01 0020
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-023D 8203 0001
+0249 8203 0001
                            LOAD    TEMP_REG, ASC_B
-023F AE01 0042
+024B AE01 0042
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0242 8203 0001
+024E 8203 0001
                            LOAD    TEMP_REG, ASC_A
-0244 AE01 0041
+0250 AE01 0041
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0247 8203 0001
+0253 8203 0001
                            LOAD    TEMP_REG, ASC_N
-0249 AE01 004E
+0255 AE01 004E
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-024C 8203 0001
+0258 8203 0001
                            LOAD    TEMP_REG, ASC_G
-024E AE01 0047
+025A AE01 0047
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0251 8203 0001
+025D 8203 0001
                            LOAD    TEMP_REG, ASC_K
-0253 AE01 004B
+025F AE01 004B
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0256 8203 0001
+0262 8203 0001
                            LOAD    TEMP_REG, ASC_O
-0258 AE01 004F
+0264 AE01 004F
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-025B 8203 0001
+0267 8203 0001
                            LOAD    TEMP_REG, ASC_K
-025D AE01 004B
+0269 AE01 004B
                            STORE   TEMP_REG, INDEX
 7631
                            ADD     INDEX, ONE
-0260 8203 0001
-               
-               ;           STORE   HOMETOWN_END, INDEX
-                           AND     INDEX, ZEROS ; Reset to ZEROS to be ready to display
-0262 8A03 0000
+026C 8203 0001
+                           LOAD    TEMP_REG, ASC_CR
+026E AE01 000D
+                           STORE   TEMP_REG, INDEX
+7631
+                           ADD     INDEX, ONE
+0271 8203 0001
+                           LOAD    TEMP_REG, ASC_LF
+0273 AE01 000A
+                           STORE   TEMP_REG, INDEX
+7631
+                           ADD     INDEX, ONE    ; This INDEX should be CRLF_BEGIN
+0276 8203 0001
                
                            RETURN
-0264 3A00               
+0278 3A00               
                ;=============================================================
                ; Subroutine: BLINK_LED
                ;       Blinking LEDs while idling the main loop
@@ -864,30 +918,111 @@
                ;   input registers: none
                ;   output registers: none
                ;=============================================================
-                           ADDRESS 0280
+                           ADDRESS 0290
                BLINK_LED
                            LOAD    DELAY, FFFF
-0280 AE05 FFFF
+0290 AE05 FFFF
                            LOAD    DELAY2, 0019
-0282 AE06 0019
+0292 AE06 0019
                TAG
                            SUB     DELAY, ONE
-0284 DC05 0001
+0294 DC05 0001
                            JUMPNZ  TAG
-0286 AC00 0284
+0296 AC00 0294
                            LOAD    DELAY, FFFF
-0288 AE05 FFFF
+0298 AE05 FFFF
                            SUB     DELAY2, ONE
-028A DC06 0001
+029A DC06 0001
                            JUMPNZ  TAG
-028C AC00 0284
+029C AC00 0294
                
                            XOR     LED, 00FF
-028E E804 00FF
+029E E804 00FF
                            OUTPUT  LED, LED_PORT
-0290 B804 0002
+02A0 B804 0002
                            RETURN
-0292 3A00               
+02A2 3A00               ;=============================================================
+               ; Routine: BIN_TO_ASCII
+               ;
+               ;   function: converting a 16-bit number into ASCII.
+               ;       Dividing input CECS_COUNT by TEN_THOUSAND, ONE_THOUSAND,
+               ;           ONE_HUNDREDS, TEN, and ONE then stores the
+               ;           division at scratch-pad address 0011, 0012, 0013,
+               ;           0014, and 0015 consequently.
+               ;   pseudo code:
+               ;       RESULT = CECS_COUNT;
+               ;
+               ;       NUM_TO_SUB = 10000;
+               ;       HOW_MANY = FIND_IT(NUM_TO_SUB);
+               ;       HOW_MANY += 0x0030;
+               ;       MEM[COUNT_MSB] = HOW_MANY;
+               ;
+               ;       NUM_TO_SUB = 1000;
+               ;       HOW_MANY = FIND_IT(NUM_TO_SUB);
+               ;       HOW_MANY += 0x0030;
+               ;       MEM[COUNT_3] = HOW_MANY;
+               ;
+               ;       NUM_TO_SUB = 100;
+               ;       HOW_MANY = FIND_IT(NUM_TO_SUB);
+               ;       HOW_MANY += 0x0030;
+               ;       MEM[COUNT_2] = HOW_MANY;
+               ;
+               ;       NUM_TO_SUB = 10;
+               ;       HOW_MANY = FIND_IT(NUM_TO_SUB);
+               ;       HOW_MANY += 0x0030;
+               ;       MEM[COUNT_1] = HOW_MANY;
+               ;
+               ;       RESULT += 0x0030;
+               ;       MEM[COUNT_LSB] = RESULT;
+               ;
+               ;   input register:
+               ;       CECS_COUNT: the 16-bit number to convert
+               ;   output address:
+               ;       MEM[COUNT_MSB(0011)]: to save ten thousandth
+               ;       MEM[COUNT_3  (0012)]: to save thousandth.
+               ;       MEM[COUNT_2  (0013)]: to save hundredth
+               ;       MEM[COUNT_1  (0014)]: to save tenth
+               ;       MEM[COUNT_LSB(0015)]: to save the rest.
+               ;   temp register:
+               ;       RESULT: temporary register for value from CECS_COUNT
+               ;       NUM_TO_SUB: temporary register for denominator
+               ;       HOW_MANY: division result
+               ;
+               ;=============================================================
+               
+               ; Address for BIN_TO_ASC
+                           ADDRESS 0310
+               
+               BIN_TO_ASCII
+                           LOAD    HOW_MANY, ZEROS
+0310 AE0B 0000
+                           LOAD    RESULT, COUNT
+302C
+               
+               SUB_FIND
+                           SUB     RESULT, TEN
+0313 DC0C 000A
+                           JUMPC   DONE_FIND
+0315 A600 031b
+                           ADD     HOW_MANY, ONE
+0317 820B 0001
+                           JUMP    SUB_FIND
+0319 A400 0313
+               DONE_FIND
+                           ADD     RESULT, TEN
+031B 820C 000A
+                           ADD     HOW_MANY, ASCII
+031D 820B 0030
+                           STORE   HOW_MANY, COUNT_TEN
+031F F40B 00D0
+               
+                           ADD     RESULT, ASCII
+0321 820C 0030
+                           STORE   RESULT, COUNT_ONE
+0323 F40C 00D1
+               
+                           RETURN
+0325 3A00               
                ;=============================================================
                ;   Subroutine: TX_FUNC
                ;
@@ -899,126 +1034,209 @@
                ;   endcase
                ;
                ;=============================================================
-                           ADDRESS 02A0
+                           ADDRESS 0330
                TX_FUNC
+                           COMP    PRINT_FLAG, ZEROS
+0330 9807 0000
+                           RETURNZ
+0332 4000               
+                           FETCH   TEMP_REG, INDEX
+7231
+                           OUTPUT  TEMP_REG, DATA_PORT
+0334 B801 0000
+                           ADD     INDEX, ONE
+0336 8203 0001
+               
+                           COMP    PRINT_FLAG, SIX
+0338 9807 0006
+                           JUMPZ   DISPLAY_COUNT
+033A AA00 0351
+                           COMP    PRINT_FLAG, FIVE
+033C 9807 0005
+                           JUMPZ   DISPLAY_BSSP
+033E AA00 0359
                            COMP    PRINT_FLAG, FOUR
-02A0 9807 0004
+0340 9807 0004
                            JUMPZ   DISPLAY_BANNER
-02A2 AA00 02b9
+0342 AA00 035f
                            COMP    PRINT_FLAG, THREE
-02A4 9807 0003
+0344 9807 0003
                            JUMPZ   DISPLAY_PROMPT
-02A6 AA00 02c4
+0346 AA00 0365
                            COMP    PRINT_FLAG, TWO
-02A8 9807 0002
+0348 9807 0002
                            JUMPZ   DISPLAY_HOMETOWN
-02AA AA00 02cf
+034A AA00 036b
                            COMP    PRINT_FLAG, ONE
-02AC 9807 0001
-                           JUMPZ   DISPLAY_ECHO
-02AE AA00 02da
+034C 9807 0001
+                           JUMPZ   DISPLAY_CRLF
+034E AA00 0373
                
-                           AND     PRINT_FLAG, ZEROS
-02B0 8A07 0000
-               			; maybe get input char here
-               			INPUT	TEMP_REG, DATA_PORT
-02B2 A201 0000
-               			COMP	TEMP_REG, ASC_STAR
-02B4 9801 002A
-               			JUMPZ	SET_HOMETOWN
-02B6 AA00 0301
-               			
-               			
                            RETURN
-02B8 3A00               
+0350 3A00               
+               DISPLAY_COUNT
+                           COMP    INDEX, COUNT_END
+0351 9803 00D2
+                           RETURNC
+0353 3C00                           LOAD    INDEX, CRLF_BEGIN
+0354 AE03 00CB
+                           LOAD    PRINT_FLAG, ONE
+0356 AE07 0001
+                           RETURN
+0358 3A00               
+               DISPLAY_BSSP
+                           COMP    INDEX, BSSP_END
+0359 9803 00D0
+                           RETURNC
+035B 3C00                           LOAD    PRINT_FLAG, ZEROS
+035C AE07 0000
+                           RETURN
+035E 3A00               
                DISPLAY_BANNER
-                           FETCH   TEMP_REG, INDEX
-7231
-                           OUTPUT  TEMP_REG, DATA_PORT
-02BA B801 0000
-                           ADD     INDEX, ONE
-02BC 8203 0001
-               
                            COMP    INDEX, BANNER_END
-02BE 9803 0097
+035F 9803 0097
                            RETURNC
-02C0 3C00                           LOAD    PRINT_FLAG, THREE
-02C1 AE07 0003
+0361 3C00                           LOAD    PRINT_FLAG, THREE
+0362 AE07 0003
                            RETURN
-02C3 3A00               			
+0364 3A00               
                DISPLAY_PROMPT
-                           FETCH   TEMP_REG, INDEX
-7231
-                           OUTPUT  TEMP_REG, DATA_PORT
-02C5 B801 0000
-                           ADD     INDEX, ONE
-02C7 8203 0001
-               
                            COMP    INDEX, PROMPT_END
-02C9 9803 00B3
+0365 9803 00B3
                            RETURNC
-02CB 3C00                           LOAD    PRINT_FLAG, ZEROS
-02CC AE07 0000
+0367 3C00                           LOAD    PRINT_FLAG, ZEROS
+0368 AE07 0000
                            RETURN
-02CE 3A00               			
+036A 3A00               
                DISPLAY_HOMETOWN
-                           FETCH   TEMP_REG, INDEX
-7231
-                           OUTPUT  TEMP_REG, DATA_PORT
-02D0 B801 0000
-                           ADD     INDEX, ONE
-02D2 8203 0001
-               
                            COMP    INDEX, HOMETOWN_END
-02D4 9803 00C9
+036B 9803 00CB
                            RETURNC
-02D6 3C00                           LOAD    PRINT_FLAG, ZEROS
-02D7 AE07 0000
+036D 3C00                           LOAD    INDEX, PROMPT_BEGIN
+036E AE03 0097
+                           LOAD    PRINT_FLAG, THREE
+0370 AE07 0003
                            RETURN
-02D9 3A00               			
-               DISPLAY_ECHO
-                           FETCH   TEMP_REG, INDEX
-7231
-                           OUTPUT  TEMP_REG, DATA_PORT
-02DB B801 0000
-                           ADD     INDEX, ONE
-02DD 8203 0001
+0372 3A00               
+               DISPLAY_CRLF
+                           COMP    INDEX, CRLF_END
+0373 9803 00CD
+                           RETURNC
+0375 3C00                           LOAD    INDEX, PROMPT_BEGIN
+0376 AE03 0097
+                           LOAD    PRINT_FLAG, THREE
+0378 AE07 0003
+                           RETURN
+037A 3A00               
                
-                           COMP    INDEX, ECHO_END
-1A83
-                           RETURNC
-02E0 3C00                           LOAD    PRINT_FLAG, ZEROS
-02E1 AE07 0000
-                           RETURN
-02E3 3A00               
                ;=============================================================
                ;   Subroutine: RX_FUNC
                ;
                ;
                ;
                ;=============================================================
-                           ADDRESS 0300
-               RX_FUNC		
-               			RETEN
-0300 4600                           ; COMP    PRINT_FLAG, ZEROS
-                           ; RETURNNZ
+                           ADDRESS 0400
+               RX_FUNC
+                           COMP    PRINT_FLAG, ZEROS
+0400 9807 0000
+                           RETURNNZ
+0402 4200               
+                           INPUT   TEMP_REG, DATA_PORT
+0403 A201 0000
+                           COMP    TEMP_REG, ZEROS
+0405 9801 0000
+                           RETURNZ
+0407 4000               
+                           COMP    TEMP_REG, ASC_STAR
+0408 9801 002A
+                           JUMPZ   SET_HOMETOWN
+040A AA00 0421
                
-                           ; INPUT   TEMP_REG, DATA_PORT
-                           ; COMP    TEMP_REG, ASC_STAR
-                           ; JUMPZ   SET_HOMETOWN
+                           COMP    TEMP_REG, ASC_CR
+040C 9801 000D
+                           JUMPZ   SET_CRLF
+040E AA00 042c
                
-                           ; RETURN
+                           COMP    TEMP_REG, ASC_BS
+0410 9801 0008
+                           JUMPZ   SET_BSSP
+0412 AA00 0437
                
+                           COMP    TEMP_REG, ASC_AT
+0414 9801 0040
+                           JUMPZ   SET_AT
+0416 AA00 0445
+               
+               SET_ECHO
+                           COMP    COUNT, MAX_CHAR
+0418 9802 0028
+                           JUMPZ   SET_CRLF
+041A AA00 042c
+                           ADD     COUNT, ONE
+041C 8202 0001
+                           OUTPUT  TEMP_REG, DATA_PORT
+041E B801 0000
+               
+                           RETURN
+0420 3A00               
                
                SET_HOMETOWN
                            LOAD    PRINT_FLAG, TWO
-0301 AE07 0002
+0421 AE07 0002
                            LOAD    INDEX, HOMETOWN_BEGIN
-0303 AE03 00B3
+0423 AE03 00B3
+                           LOAD    TEMP_REG, ASC_NULL
+0425 AE01 0000
+                           OUTPUT  TEMP_REG, DATA_PORT
+0427 B801 0000
+                           LOAD    COUNT, ZEROS
+0429 AE02 0000
                            RETURN
-0305 3A00               
-               
-               
+042B 3A00               
+               SET_CRLF
+                           LOAD    PRINT_FLAG, ONE
+042C AE07 0001
+                           LOAD    INDEX, CRLF_BEGIN
+042E AE03 00CB
+                           LOAD    TEMP_REG, ASC_NULL
+0430 AE01 0000
+                           OUTPUT  TEMP_REG, DATA_PORT
+0432 B801 0000
+                           LOAD    COUNT, ZEROS
+0434 AE02 0000
+                           RETURN
+0436 3A00               
+               SET_BSSP
+                           COMP    COUNT, ZEROS
+0437 9802 0000
+                           RETURNZ
+0439 4000                           LOAD    PRINT_FLAG, FIVE
+043A AE07 0005
+                           LOAD    INDEX, BSSP_BEGIN
+043C AE03 00CD
+                           LOAD    TEMP_REG, ASC_NULL
+043E AE01 0000
+                           OUTPUT  TEMP_REG, DATA_PORT
+0440 B801 0000
+                           SUB     COUNT, ONE
+0442 DC02 0001
+                           RETURN
+0444 3A00               
+               SET_AT
+                           CALL    BIN_TO_ASCII
+0445 8E00 0310
+                           LOAD    PRINT_FLAG, SIX
+0447 AE07 0006
+                           LOAD    INDEX, COUNT_BEGIN
+0449 AE03 00D0
+                           LOAD    TEMP_REG, ASC_NULL
+044B AE01 0000
+                           OUTPUT  TEMP_REG, DATA_PORT
+044D B801 0000
+                           LOAD    COUNT, ZEROS
+044F AE02 0000
+                           RETURN
+0451 3A00               
                ;=============================================================
                ; Sub Routine: Interrupt Service Routine(ISR)
                ;       Checking UART STATUS if the UART is ready to
@@ -1064,25 +1282,24 @@
 0E04 9809 0003
                            JUMPZ   CALL_BOTH
 0E06 AA00 0e11
-               			
+               
                            COMP    UART_STATUS, TWO
 0E08 9809 0002
                            CALLZ   TX_FUNC                     ; TX is ready
-0E0A 9400 02a0
+0E0A 9400 0330
                
                            COMP    UART_STATUS, ONE
 0E0C 9809 0001
                            CALLZ   RX_FUNC                     ; RX is ready
-0E0E 9400 0300
-               
+0E0E 9400 0400
                
                            RETEN
 0E10 4600               
                CALL_BOTH
                            CALL    TX_FUNC                     ; prioritize to TX
-0E11 8E00 02a0
+0E11 8E00 0330
                            CALL    RX_FUNC
-0E13 8E00 0300
+0E13 8E00 0400
                            RETEN
 0E15 4600               
                ;=============================================================

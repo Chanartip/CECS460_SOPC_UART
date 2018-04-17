@@ -66,19 +66,17 @@ module uart_tx_tb;
 		
 	initial begin
 		// Initialize Inputs
-		f = $fopen("output2.txt");
+		f = $fopen("output.txt");
 		flip = 0;
 		i_clk = 0;
 		i_rst = 1;
 		i_write = 0;
-		i_byte = 8'hAE;
-		i_eight = 1;
-		i_pen = 1;
+		i_byte = 8'h3A;
+		i_eight = 0;
+		i_pen = 0;
 		i_ohel = 0;
 		i_rate = 19'd109;
 		t = 100;
-
-//		@(negedge i_clk) i_rst = ~i_rst;
 
 		#100
 		i_rst = 1'b0;

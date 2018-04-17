@@ -1,0 +1,7 @@
+verilog work "RX_SHIFT_REG.v"
+verilog work "RX_REMAP.v"
+verilog work "RX_DATAPATH.v"
+verilog work "RX_Control.v"
+verilog work "UART_RX.v"
+verilog work "UART_RX_tb.v"
+verilog work "C:/Xilinx/14.7/ISE_DS/ISE//verilog/src/glbl.v"

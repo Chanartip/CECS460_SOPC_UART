@@ -37,15 +37,15 @@ Setup/Hold to clock SYS_CLK
             |Max Setup to|  Process   |Max Hold to |  Process   |                  | Clock  |
 Source      | clk (edge) |   Corner   | clk (edge) |   Corner   |Internal Clock(s) | Phase  |
 ------------+------------+------------+------------+------------+------------------+--------+
-SW_BAUD<0>  |    5.278(R)|      SLOW  |   -0.731(R)|      SLOW  |SYS_CLK_BUFGP     |   0.000|
-SW_BAUD<1>  |    5.161(R)|      SLOW  |   -0.595(R)|      SLOW  |SYS_CLK_BUFGP     |   0.000|
-SW_BAUD<2>  |    4.786(R)|      SLOW  |   -0.751(R)|      FAST  |SYS_CLK_BUFGP     |   0.000|
-SW_BAUD<3>  |    5.344(R)|      SLOW  |   -0.919(R)|      FAST  |SYS_CLK_BUFGP     |   0.000|
-SW_EIGHT    |    5.854(R)|      SLOW  |   -0.576(R)|      SLOW  |SYS_CLK_BUFGP     |   0.000|
-SW_OHEL     |    1.765(R)|      SLOW  |   -0.526(R)|      SLOW  |SYS_CLK_BUFGP     |   0.000|
-SW_PEN      |    5.572(R)|      SLOW  |   -0.562(R)|      SLOW  |SYS_CLK_BUFGP     |   0.000|
+SW_BAUD<0>  |    5.122(R)|      SLOW  |   -0.876(R)|      FAST  |SYS_CLK_BUFGP     |   0.000|
+SW_BAUD<1>  |    5.370(R)|      SLOW  |   -0.595(R)|      SLOW  |SYS_CLK_BUFGP     |   0.000|
+SW_BAUD<2>  |    5.218(R)|      SLOW  |   -0.693(R)|      SLOW  |SYS_CLK_BUFGP     |   0.000|
+SW_BAUD<3>  |    5.911(R)|      SLOW  |   -0.987(R)|      FAST  |SYS_CLK_BUFGP     |   0.000|
+SW_EIGHT    |    5.739(R)|      SLOW  |   -0.551(R)|      SLOW  |SYS_CLK_BUFGP     |   0.000|
+SW_OHEL     |    1.698(R)|      SLOW  |   -0.262(R)|      SLOW  |SYS_CLK_BUFGP     |   0.000|
+SW_PEN      |    5.325(R)|      SLOW  |   -0.587(R)|      SLOW  |SYS_CLK_BUFGP     |   0.000|
 SYS_RST     |    0.514(R)|      FAST  |    0.489(R)|      SLOW  |SYS_CLK_BUFGP     |   0.000|
-i_RX        |    1.841(R)|      SLOW  |   -0.636(R)|      SLOW  |SYS_CLK_BUFGP     |   0.000|
+i_RX        |    2.327(R)|      SLOW  |   -0.610(R)|      SLOW  |SYS_CLK_BUFGP     |   0.000|
 ------------+------------+------------+------------+------------+------------------+--------+
 
 Clock SYS_CLK to Pad
@@ -53,15 +53,15 @@ Clock SYS_CLK to Pad
             |Max (slowest) clk|  Process   |Min (fastest) clk|  Process   |                  | Clock  |
 Destination |  (edge) to PAD  |   Corner   |  (edge) to PAD  |   Corner   |Internal Clock(s) | Phase  |
 ------------+-----------------+------------+-----------------+------------+------------------+--------+
-o_LED<0>    |         8.761(R)|      SLOW  |         4.984(R)|      FAST  |SYS_CLK_BUFGP     |   0.000|
-o_LED<1>    |         8.787(R)|      SLOW  |         5.018(R)|      FAST  |SYS_CLK_BUFGP     |   0.000|
-o_LED<2>    |         8.603(R)|      SLOW  |         4.904(R)|      FAST  |SYS_CLK_BUFGP     |   0.000|
-o_LED<3>    |         8.603(R)|      SLOW  |         4.904(R)|      FAST  |SYS_CLK_BUFGP     |   0.000|
-o_LED<4>    |         8.288(R)|      SLOW  |         4.628(R)|      FAST  |SYS_CLK_BUFGP     |   0.000|
-o_LED<5>    |         8.288(R)|      SLOW  |         4.628(R)|      FAST  |SYS_CLK_BUFGP     |   0.000|
-o_LED<6>    |         8.173(R)|      SLOW  |         4.592(R)|      FAST  |SYS_CLK_BUFGP     |   0.000|
-o_LED<7>    |         8.173(R)|      SLOW  |         4.592(R)|      FAST  |SYS_CLK_BUFGP     |   0.000|
-o_TX        |         8.477(R)|      SLOW  |         4.755(R)|      FAST  |SYS_CLK_BUFGP     |   0.000|
+o_LED<0>    |         8.770(R)|      SLOW  |         4.962(R)|      FAST  |SYS_CLK_BUFGP     |   0.000|
+o_LED<1>    |         8.770(R)|      SLOW  |         4.962(R)|      FAST  |SYS_CLK_BUFGP     |   0.000|
+o_LED<2>    |         8.398(R)|      SLOW  |         4.784(R)|      FAST  |SYS_CLK_BUFGP     |   0.000|
+o_LED<3>    |         8.398(R)|      SLOW  |         4.784(R)|      FAST  |SYS_CLK_BUFGP     |   0.000|
+o_LED<4>    |         8.104(R)|      SLOW  |         4.510(R)|      FAST  |SYS_CLK_BUFGP     |   0.000|
+o_LED<5>    |         8.117(R)|      SLOW  |         4.516(R)|      FAST  |SYS_CLK_BUFGP     |   0.000|
+o_LED<6>    |         7.930(R)|      SLOW  |         4.430(R)|      FAST  |SYS_CLK_BUFGP     |   0.000|
+o_LED<7>    |         7.930(R)|      SLOW  |         4.430(R)|      FAST  |SYS_CLK_BUFGP     |   0.000|
+o_TX        |         8.822(R)|      SLOW  |         4.963(R)|      FAST  |SYS_CLK_BUFGP     |   0.000|
 ------------+-----------------+------------+-----------------+------------+------------------+--------+
 
 Clock to Setup on destination clock SYS_CLK
@@ -69,11 +69,11 @@ Clock to Setup on destination clock SYS_CLK
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
-SYS_CLK        |    9.841|         |         |         |
+SYS_CLK        |    9.843|         |         |         |
 ---------------+---------+---------+---------+---------+
 
 
-Analysis completed Tue Apr 17 01:55:24 2018 
+Analysis completed Tue Apr 17 12:17:28 2018 
 --------------------------------------------------------------------------------
 
 Trace Settings:

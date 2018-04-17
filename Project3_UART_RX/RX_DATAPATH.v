@@ -8,12 +8,17 @@
 //    Project name:  Project3_UART_RX                                          //
 //    File name:     RX_DATAPATH.v                                             //
 //                                                                             //
-//    Created by Chanartip Soonthornwan on March 18, 2018.                     //
+//    Created by Chanartip Soonthornwan on April 17, 2018.                     //
 //    Copyright @ 2018 Chanartip Soonthornwan. All rights reserved.            //
 //                                                                             //
 //    Abstract:      Datapath of Receive Engine where passing transmitted      //
 //                   data to the TramelBlaze and checking the data             //
 //                   transmission's error.                                     //
+//                                                                             //
+//    Revision 1.1:  Current Date April 17, 2018                               //
+//                   - Add a case of 7N1, 7O1, 7E1 outputs to TramelBlaze      //
+//                                                                             //
+//    Revision 1.0:  Date March 18, 2018                                       //
 //                                                                             //
 //    In submitting this file for class work at CSULB                          //
 //    I am confirming that this is my work and the work                        //
@@ -79,7 +84,7 @@ module RX_DATAPATH(
    );
 
    // Assigning the re-mapped data to TramelBlaze
-   assign o_rx_byte = w_map_data[7:0];
+   assign o_rx_byte = (i_eight)? w_map_data[7:0]: {1'b0, w_map_data[6:0]};
 
    // PARITY GEN SELECT
    wire   w_par_gen_sel_mux;
