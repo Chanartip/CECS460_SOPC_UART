@@ -1,0 +1,6 @@
+verilog work "SHIFT_R_FUNC.v"
+verilog work "SHIFT_R.v"
+verilog work "RS_FLOP.v"
+verilog work "UART_TX.v"
+verilog work "uart_tx_tb.v"
+verilog work "C:/Xilinx/14.7/ISE_DS/ISE//verilog/src/glbl.v"

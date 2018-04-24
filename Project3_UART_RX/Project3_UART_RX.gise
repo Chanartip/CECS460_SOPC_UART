@@ -60,9 +60,7 @@
     <file xil_pn:fileType="FILE_ISIM_MISC" xil_pn:name="SOPC_Core_tb_isim_beh.wdb"/>
     <file xil_pn:fileType="FILE_WEBTALK" xil_pn:name="SOPC_Core_usage.xml"/>
     <file xil_pn:fileType="FILE_XRPT" xil_pn:name="SOPC_Core_xst.xrpt"/>
-    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="UART_RX_tb_beh.prj"/>
     <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_ISIM_EXE" xil_pn:name="UART_RX_tb_isim_beh.exe"/>
-    <file xil_pn:fileType="FILE_ISIM_MISC" xil_pn:name="UART_RX_tb_isim_beh.wdb"/>
     <file xil_pn:fileType="FILE_SYMBOL" xil_pn:name="UART_TOP.sym" xil_pn:origination="imported"/>
     <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="_ngo"/>
     <file xil_pn:fileType="FILE_XMSGS" xil_pn:name="_xmsgs/bitgen.xmsgs"/>
@@ -79,7 +77,9 @@
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_BITGEN_REPORT" xil_pn:name="sopc_core.bgn" xil_pn:subbranch="FPGAConfiguration"/>
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_BIT" xil_pn:name="sopc_core.bit" xil_pn:subbranch="FPGAConfiguration"/>
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_BITGEN_DRC" xil_pn:name="sopc_core.drc" xil_pn:subbranch="FPGAConfiguration"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="uart_tx_tb_beh.prj"/>
     <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_ISIM_EXE" xil_pn:name="uart_tx_tb_isim_beh.exe"/>
+    <file xil_pn:fileType="FILE_ISIM_MISC" xil_pn:name="uart_tx_tb_isim_beh.wdb"/>
     <file xil_pn:fileType="FILE_HTML" xil_pn:name="usage_statistics_webtalk.html"/>
     <file xil_pn:fileType="FILE_LOG" xil_pn:name="webtalk.log"/>
     <file xil_pn:fileType="FILE_FITTER_REPORT" xil_pn:name="webtalk_pn.xml"/>
@@ -122,11 +122,11 @@
       <outfile xil_pn:name="tramelblaze_top.v"/>
       <outfile xil_pn:name="uart_tx_tb.v"/>
     </transform>
-    <transform xil_pn:end_ts="1523995731" xil_pn:name="TRAN_xawsToSimhdl" xil_pn:prop_ck="-8917074064341928111" xil_pn:start_ts="1523995731">
+    <transform xil_pn:end_ts="1524161909" xil_pn:name="TRAN_xawsToSimhdl" xil_pn:prop_ck="2780606665010590739" xil_pn:start_ts="1524161909">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1523995731" xil_pn:name="TRAN_schematicsToHdlSim" xil_pn:prop_ck="-7270324275418656497" xil_pn:start_ts="1523995731">
+    <transform xil_pn:end_ts="1524161909" xil_pn:name="TRAN_schematicsToHdlSim" xil_pn:prop_ck="-83211849342381615" xil_pn:start_ts="1524161909">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
@@ -172,26 +172,26 @@
       <outfile xil_pn:name="tramelblaze_top.v"/>
       <outfile xil_pn:name="uart_tx_tb.v"/>
     </transform>
-    <transform xil_pn:end_ts="1523995734" xil_pn:in_ck="-6031595189515219724" xil_pn:name="TRAN_ISimulateBehavioralModelRunFuse" xil_pn:prop_ck="-2498981142488738335" xil_pn:start_ts="1523995731">
+    <transform xil_pn:end_ts="1524161913" xil_pn:in_ck="-6031595189515219724" xil_pn:name="TRAN_ISimulateBehavioralModelRunFuse" xil_pn:prop_ck="-598741605591183323" xil_pn:start_ts="1524161909">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
       <status xil_pn:value="OutOfDateForOutputs"/>
       <status xil_pn:value="OutputChanged"/>
-      <outfile xil_pn:name="UART_RX_tb_beh.prj"/>
-      <outfile xil_pn:name="UART_RX_tb_isim_beh.exe"/>
       <outfile xil_pn:name="fuse.log"/>
       <outfile xil_pn:name="isim"/>
       <outfile xil_pn:name="isim.log"/>
+      <outfile xil_pn:name="uart_tx_tb_beh.prj"/>
+      <outfile xil_pn:name="uart_tx_tb_isim_beh.exe"/>
       <outfile xil_pn:name="xilinxsim.ini"/>
     </transform>
-    <transform xil_pn:end_ts="1523995734" xil_pn:in_ck="2460353790148913268" xil_pn:name="TRAN_ISimulateBehavioralModel" xil_pn:prop_ck="-5262772478780418076" xil_pn:start_ts="1523995734">
+    <transform xil_pn:end_ts="1524161913" xil_pn:in_ck="-2223003185638064747" xil_pn:name="TRAN_ISimulateBehavioralModel" xil_pn:prop_ck="3266524322753186664" xil_pn:start_ts="1524161913">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
       <status xil_pn:value="OutOfDateForOutputs"/>
       <status xil_pn:value="OutputChanged"/>
-      <outfile xil_pn:name="UART_RX_tb_isim_beh.wdb"/>
       <outfile xil_pn:name="isim.cmd"/>
       <outfile xil_pn:name="isim.log"/>
+      <outfile xil_pn:name="uart_tx_tb_isim_beh.wdb"/>
     </transform>
     <transform xil_pn:end_ts="1523987935" xil_pn:name="TRAN_copyInitialToXSTAbstractSynthesis" xil_pn:start_ts="1523987935">
       <status xil_pn:value="SuccessfullyRun"/>
