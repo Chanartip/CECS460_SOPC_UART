@@ -255,6 +255,7 @@
     <transform xil_pn:end_ts="1523992608" xil_pn:in_ck="2848995026204835298" xil_pn:name="TRANEXT_ngdbuild_FPGA" xil_pn:prop_ck="-8427859232154774078" xil_pn:start_ts="1523992603">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForInputs"/>
       <status xil_pn:value="OutOfDateForPredecessor"/>
       <outfile xil_pn:name="SOPC_Core.bld"/>
       <outfile xil_pn:name="SOPC_Core.ngd"/>

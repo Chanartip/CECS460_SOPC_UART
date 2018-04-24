@@ -1,1 +1,0 @@
--intstyle "ise" -incremental -lib "unisims_ver" -lib "unimacro_ver" -lib "xilinxcorelib_ver" -lib "secureip" -o "C:/Users/Chana/Desktop/CECS460/Project3_UART_RX/uart_tx_tb_isim_beh.exe" -prj "C:/Users/Chana/Desktop/CECS460/Project3_UART_RX/uart_tx_tb_beh.prj" "work.uart_tx_tb" "work.glbl" 
