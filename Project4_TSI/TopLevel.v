@@ -61,14 +61,14 @@ module TopLevel(
     );
 
     SOPC_Core sopc_inst(
-        .SYS_CLK(w_CLK),         // System Clock
-        .SYS_RST(w_RST),         // System Reset
-        .SW_BAUD(w_SW[6:3]),     // Baud Rate Switches input
-        .SW_EIGHT(w_SW[2]),      // Eight Bit Control
-        .SW_PEN(w_SW[1]),        // Parity Bit Control
-        .SW_OHEL(w_SW[0]),       // Odd/Even Parity Bit Control
-        .i_RX(w_RX),             // Receive Line Input
-        .o_LED(w_LED),           // On-Board LEDs
-        .o_TX(w_TX)              // Transmit Line Output
+        .SYS_CLK (w_CLK    ),    // System Clock
+        .SYS_RST (w_RST    ),    // System Reset
+        .SW_BAUD (w_SW[6:3]),    // Baud Rate Switches input
+        .SW_EIGHT(w_SW[2]  ),    // Eight Bit Control
+        .SW_PEN  (w_SW[1]  ),    // Parity Bit Control
+        .SW_OHEL (w_SW[0]  ),    // Odd/Even Parity Bit Control
+        .i_RX    (w_RX     ),    // Receive Line Input
+        .o_LED   (w_LED    ),    // On-Board LEDs
+        .o_TX    (w_TX     )     // Transmit Line Output
    );
 endmodule
