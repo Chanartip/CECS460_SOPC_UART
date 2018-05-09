@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <report-views version="2.0" >
  <header>
-  <DateModified>2018-04-27T13:39:05</DateModified>
+  <DateModified>2018-04-30T22:41:26</DateModified>
   <ModuleName>TopLevel</ModuleName>
   <SummaryTimeStamp>Unknown</SummaryTimeStamp>
   <SavedFilePath>C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project4_TSI/iseconfig/TopLevel.xreport</SavedFilePath>
-  <ImplementationReportsDirectory>C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project4_TSI</ImplementationReportsDirectory>
+  <ImplementationReportsDirectory>C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project4_TSI\</ImplementationReportsDirectory>
   <DateInitialized>2018-04-27T13:39:05</DateInitialized>
   <EnableMessageFiltering>false</EnableMessageFiltering>
  </header>
