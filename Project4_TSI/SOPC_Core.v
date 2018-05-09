@@ -99,19 +99,19 @@ module SOPC_Core(
     ); 
     
    // Vector Interrupt Controller (VIC 
-   VIC vic_inst
-   (.clk(SYS_CLK), 
-    .rst(w_rst_s), 
-    .cs(), 
-    .datain(), 
-    .port_id(w_tb_port_id), 
-    .read_strobe(w_rd_strobe), 
-    .write_strobe(), 
-    .dout(), 
-    .interrupts(), 
-    .IntAck(), 
-    .InterruptOut()
-    );
+//   VIC vic_inst
+//   (.clk(SYS_CLK), 
+//    .rst(w_rst_s), 
+//    .cs(), 
+//    .datain(), 
+//    .port_id(w_tb_port_id), 
+//    .read_strobe(w_rd_strobe), 
+//    .write_strobe(), 
+//    .dout(), 
+//    .interrupts(), 
+//    .IntAck(), 
+//    .InterruptOut()
+//    );
     
    // Address Decoder
    ADDR_DECODER addr_dec_inst
