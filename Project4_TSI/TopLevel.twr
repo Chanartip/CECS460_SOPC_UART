@@ -73,14 +73,22 @@ SYS_CLK        |   10.552|         |         |         |
 ---------------+---------+---------+---------+---------+
 
 
+<<<<<<< HEAD
 Analysis completed Thu May 10 15:00:22 2018 
+=======
+Analysis completed Tue May 08 20:38:14 2018 
+>>>>>>> 29e71ddeecd7b70402201171be208750c03c1484
 --------------------------------------------------------------------------------
 
 Trace Settings:
 -------------------------
 Trace Settings 
 
+<<<<<<< HEAD
 Peak Memory Usage: 302 MB
+=======
+Peak Memory Usage: 301 MB
+>>>>>>> 29e71ddeecd7b70402201171be208750c03c1484
 
 
 

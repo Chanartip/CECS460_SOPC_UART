@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 C:\Users\Chana\Desktop\CECS460\Project4_TSI\TopLevel.ngc 1525989561
 ipcore_dir/tb_rom.ngc 1524001390
 ipcore_dir/stack_ram.ngc 1523903867
 ipcore_dir/scratch_ram.ngc 1523904330
+=======
+C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project4_TSI\TopLevel.ngc 1525837045
+ipcore_dir/tb_rom.ngc 1524552506
+ipcore_dir/stack_ram.ngc 1524552506
+ipcore_dir/scratch_ram.ngc 1524552505
+>>>>>>> 29e71ddeecd7b70402201171be208750c03c1484
 OK

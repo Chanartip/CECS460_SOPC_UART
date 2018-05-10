@@ -5,7 +5,11 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <DeviceUsageSummary rev="2">
+<<<<<<< HEAD
 <DesignStatistics TimeStamp="Thu May 10 15:00:35 2018"><group name="NetStatistics">
+=======
+<DesignStatistics TimeStamp="Tue May 08 20:38:24 2018"><group name="NetStatistics">
+>>>>>>> 29e71ddeecd7b70402201171be208750c03c1484
 <item name="NumNets_Active" rev="2">
 <attrib name="value" value="1224"/></item>
 <item name="NumNets_Gnd" rev="2">
@@ -180,7 +184,11 @@
 <attrib name="value" value="3"/></item>
 </group>
 </DesignStatistics>
+<<<<<<< HEAD
 <DeviceUsage TimeStamp="Thu May 10 15:00:35 2018"><group name="SiteSummary">
+=======
+<DeviceUsage TimeStamp="Tue May 08 20:38:24 2018"><group name="SiteSummary">
+>>>>>>> 29e71ddeecd7b70402201171be208750c03c1484
 <item name="BUFG" rev="2">
 <attrib name="total" value="1000000"/><attrib name="used" value="1"/></item>
 <item name="BUFG_BUFG" rev="2">
@@ -225,7 +233,11 @@
 <attrib name="total" value="1000000"/><attrib name="used" value="267"/></item>
 </group>
 </DeviceUsage>
+<<<<<<< HEAD
 <ReportConfigData TimeStamp="Thu May 10 15:00:35 2018"><group name="REG_SR">
+=======
+<ReportConfigData TimeStamp="Tue May 08 20:38:24 2018"><group name="REG_SR">
+>>>>>>> 29e71ddeecd7b70402201171be208750c03c1484
 <item name="CK" rev="2">
 <attrib name="CK" value="458"/><attrib name="CK_INV" value="1"/></item>
 <item name="LATCH_OR_FF" rev="2">
@@ -428,7 +440,11 @@
 <attrib name="WRITE_FIRST" value="2"/></item>
 </group>
 </ReportConfigData>
+<<<<<<< HEAD
 <ReportPinData TimeStamp="Thu May 10 15:00:35 2018"><group name="REG_SR">
+=======
+<ReportPinData TimeStamp="Tue May 08 20:38:24 2018"><group name="REG_SR">
+>>>>>>> 29e71ddeecd7b70402201171be208750c03c1484
 <item name="CE" rev="2">
 <attrib name="value" value="382"/></item>
 <item name="CK" rev="2">

@@ -1,0 +1,1 @@
+-intstyle "ise" -incremental -lib "unisims_ver" -lib "unimacro_ver" -lib "xilinxcorelib_ver" -lib "secureip" -o "C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project4_TSI/VIC_tf_isim_beh.exe" -prj "C:/Users/Charles/Desktop/CECS460/CECS460_SOPC_UART/Project4_TSI/VIC_tf_beh.prj" "work.VIC_tf" "work.glbl" 
