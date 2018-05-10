@@ -67,13 +67,13 @@ module TSI(
     // UART I/O
     OBUF #( .IOSTANDARD("DEFAULT") )
     TX(
-        O(o_TX),
-        I(i_TX)
+        .O(o_TX),
+        .I(i_TX)
     );
     IBUF #( .IOSTANDARD("DEFAULT") )
     RX(
-        O(o_RX),
-        I(i_RX)
+        .O(o_RX),
+        .I(i_RX)
     );
     
     // LEDs

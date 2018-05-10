@@ -1,0 +1,8 @@
+INTSTYLE=ise
+INFILE=C:\Users\Chana\Desktop\CECS460\Project4_TSI\TopLevel.ncd
+OUTFILE=C:\Users\Chana\Desktop\CECS460\Project4_TSI\TopLevel.bit
+FAMILY=Spartan6
+PART=xc6slx16-3csg324
+WORKINGDIR=C:\Users\Chana\Desktop\CECS460\Project4_TSI
+LICENSE=WebPack
+USER_INFO=211085786_0_0_935
