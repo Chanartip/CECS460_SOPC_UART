@@ -1,8 +1,16 @@
 INTSTYLE=ise
+<<<<<<< HEAD
+INFILE=C:\Users\Chana\Desktop\CECS460\Project4_TSI\TopLevel.ncd
+OUTFILE=C:\Users\Chana\Desktop\CECS460\Project4_TSI\TopLevel.bit
+FAMILY=Spartan6
+PART=xc6slx16-3csg324
+WORKINGDIR=C:\Users\Chana\Desktop\CECS460\Project4_TSI
+=======
 INFILE=C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project4_TSI\TopLevel.ncd
 OUTFILE=C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project4_TSI\TopLevel.bit
 FAMILY=Spartan6
 PART=xc6slx16-3csg324
 WORKINGDIR=C:\Users\Charles\Desktop\CECS460\CECS460_SOPC_UART\Project4_TSI
+>>>>>>> 29e71ddeecd7b70402201171be208750c03c1484
 LICENSE=WebPack
 USER_INFO=211085786_0_0_935
