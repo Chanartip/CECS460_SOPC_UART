@@ -1,23 +1,32 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date:    00:44:18 04/24/2018 
-// Design Name: 
-// Module Name:    TopLevel 
-// Project Name: 
-// Target Devices: 
-// Tool versions: 
-// Description: 
-//
-// Dependencies: 
-//
-// Revision: 
-// Revision 0.01 - File Created
-// Additional Comments: 
-//
-//////////////////////////////////////////////////////////////////////////////////
+//*****************************************************************************//
+//    This document contains information proprietary to the                    //
+//    CSULB student that created the file - any reuse without                  //
+//    adequate approval and documentation is prohibited                        //
+//                                                                             //
+//    Class:         CECS460 System on Chip Design                             //
+//    Project name:  Project4_TSI                                              //
+//    File name:     TopLevel.v                                                //
+//                                                                             //
+//    Created by Chanartip Soonthornwan on March 25, 2018.                     //
+//    Copyright @ 2018 Chanartip Soonthornwan. All rights reserved.            //
+//                                                                             //
+//    Abstract:      Overview of the project shows instantiates of             //
+//                   TSI and SOPC modules         			                   //
+//                                                                             //
+//    Version 1.0:   Date: March 25, 2018.                                     //
+//                                                                             //
+//    In submitting this file for class work at CSULB                          //
+//    I am confirming that this is my work and the work                        //
+//    of no one else.                                                          //
+//                                                                             //
+//    In the event other code sources are utilized I will                      //
+//    document which portion of code and who is the author                     //
+//                                                                             //
+//    In submitting this code I acknowledge that plagiarism                    //
+//    in student project work is subject to dismissal from the class           //
+//                                                                             //
+//*****************************************************************************//
 module TopLevel(
     // FPGA INPUTS
     input       SYS_CLK,        // System Clock

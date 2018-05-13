@@ -8,12 +8,12 @@
 //    Project name:  Project4_TSI                                              //
 //    File name:     TSI.v                                                     //
 //                                                                             //
-//    Created by Chanartip Soonthornwan on March 25, 2018.                     //
+//    Created by Chanartip Soonthornwan on May  5, 2018.                       //
 //    Copyright @ 2018 Chanartip Soonthornwan. All rights reserved.            //
 //                                                                             //
-//    Abstract:                 //
+//    Abstract:      Technology Specific Interface as a buffer for SOPC I/O    //
 //                                                                             //
-//    Version 1.0:   Date: April 25, 2018.                                     //
+//    Version 1.0:   Date: May  5, 2018.                                       //
 //                                                                             //
 //    In submitting this file for class work at CSULB                          //
 //    I am confirming that this is my work and the work                        //
